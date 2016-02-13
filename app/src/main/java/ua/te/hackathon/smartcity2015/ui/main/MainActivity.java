@@ -16,8 +16,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
-import ua.te.hackathon.smartcity2015.ui.BrowseEventsFragment;
-import ua.te.hackathon.smartcity2015.ui.CreateEventFragment;
+import ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment;
+import ua.te.hackathon.smartcity2015.ui.main.events.create.CreateEventFragment;
 
 public class MainActivity extends BaseActivity implements MainView {
 
@@ -59,8 +59,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
   public void setupViewPager() {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(new CreateEventFragment(), "Create Event");
-    adapter.addFragment(new BrowseEventsFragment(), "Browse Events");
+    adapter.addFragment(new CreateEventFragment(), getString(R.string.create_event));
+    adapter.addFragment(new BrowseEventsFragment(), getString(R.string.browse_events));
     viewPager.setAdapter(adapter);
   }
 
