@@ -20,18 +20,6 @@ public class Event extends RealmObject {
     private String place;
     private RealmList<User> joinedUsers;
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "name='" + name + '\'' +
-                ", date=" + date +
-                ", description='" + description + '\'' +
-                ", backgroundUrl='" + backgroundUrl + '\'' +
-                ", place='" + place + '\'' +
-                ", joinedUsers=" + joinedUsers +
-                '}';
-    }
-
     public String getName() {
         return name;
     }
@@ -78,32 +66,5 @@ public class Event extends RealmObject {
 
     public void setJoinedUsers(RealmList<User> joinedUsers) {
         this.joinedUsers = joinedUsers;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Event event = (Event) o;
-
-        if (date != event.date) return false;
-        if (!name.equals(event.name)) return false;
-        if (!description.equals(event.description)) return false;
-        if (!backgroundUrl.equals(event.backgroundUrl)) return false;
-        if (!place.equals(event.place)) return false;
-        return joinedUsers.equals(event.joinedUsers);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + (int) (date ^ (date >>> 32));
-        result = 31 * result + description.hashCode();
-        result = 31 * result + backgroundUrl.hashCode();
-        result = 31 * result + place.hashCode();
-        result = 31 * result + joinedUsers.hashCode();
-        return result;
     }
 }
