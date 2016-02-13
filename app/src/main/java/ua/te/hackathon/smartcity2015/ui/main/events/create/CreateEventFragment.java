@@ -31,13 +31,13 @@ public class CreateEventFragment extends Fragment implements CreateEventView {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View rootView =  inflater.inflate(R.layout.fragment_create_event, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_create_event, container, false);
     ButterKnife.bind(this, rootView);
 
     ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(
         getContext(),
         R.layout.spinner_item,
-        new String[] {"грати", "дивитись", "обговорити"}
+        new String[]{"грати", "дивитись", "обговорити"}
     );
     categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     categorySpinner.setAdapter(categoryAdapter);
@@ -45,7 +45,7 @@ public class CreateEventFragment extends Fragment implements CreateEventView {
     ArrayAdapter<String> dayAdapter = new ArrayAdapter<>(
         getContext(),
         R.layout.spinner_item,
-        new String[] {"сьогодні", "завтра", "інший"}
+        new String[]{"сьогодні", "завтра", "інший"}
     );
     dayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     daySpinner.setAdapter(dayAdapter);
@@ -53,7 +53,7 @@ public class CreateEventFragment extends Fragment implements CreateEventView {
     ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
         getContext(),
         R.layout.spinner_item,
-        new String[] {"зранку (9:00)", "в обід (13:00)", "вечером (20:00)"}
+        new String[]{"зранку (9:00)", "в обід (13:00)", "вечером (20:00)"}
     );
     timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     timeSpinner.setAdapter(timeAdapter);
@@ -61,7 +61,7 @@ public class CreateEventFragment extends Fragment implements CreateEventView {
     ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(
         getContext(),
         R.layout.spinner_item,
-        new String[] {"на міському стадіоні", "біля Нової", "на Болоті", "на Цизі", "десь інше"}
+        new String[]{"на міському стадіоні", "біля Нової", "на Болоті", "на Цизі", "десь інше"}
     );
     timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     locationSpinner.setAdapter(locationAdapter);

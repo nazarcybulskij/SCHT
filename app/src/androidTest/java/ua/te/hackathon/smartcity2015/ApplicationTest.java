@@ -6,7 +6,6 @@ import android.test.ApplicationTestCase;
 import junit.framework.Assert;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import ua.te.hackathon.smartcity2015.model.User;
 
 /**

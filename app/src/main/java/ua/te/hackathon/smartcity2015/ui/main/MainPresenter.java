@@ -3,7 +3,7 @@ package ua.te.hackathon.smartcity2015.ui.main;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import ua.te.hackathon.smartcity2015.ui.Presenter;
+import ua.te.hackathon.smartcity2015.ui.base.mvp.Presenter;
 
 /**
  * @author victor

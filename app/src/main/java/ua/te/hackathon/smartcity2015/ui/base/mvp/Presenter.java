@@ -1,4 +1,4 @@
-package ua.te.hackathon.smartcity2015.ui;
+package ua.te.hackathon.smartcity2015.ui.base.mvp;
 
 /**
  * @author victor

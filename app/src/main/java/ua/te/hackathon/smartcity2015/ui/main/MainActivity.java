@@ -33,8 +33,7 @@ public class MainActivity extends BaseActivity implements MainView {
   TabLayout tabLayout;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void onCreateAuthenticated(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
 
     ButterKnife.bind(this);
@@ -61,7 +60,7 @@ public class MainActivity extends BaseActivity implements MainView {
   public void setupViewPager() {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(new CreateEventFragment(), getString(R.string.create_event));
-    adapter.addFragment(new BrowseEventsFragment(), getString(R.string.browse_events));
+    adapter.addFragment(BrowseEventsFragment.newInstance(), getString(R.string.browse_events));
     viewPager.setAdapter(adapter);
   }
 

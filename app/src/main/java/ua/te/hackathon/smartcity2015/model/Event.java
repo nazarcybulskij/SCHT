@@ -10,61 +10,70 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Event extends RealmObject {
 
-    @PrimaryKey
-    private String name;
-    @Index
-    private long date;
-    private String description;
-    private String backgroundUrl;
-    @Index
-    private String place;
-    private RealmList<User> joinedUsers;
+  @PrimaryKey
+  private int id;
+  private String name;
+  @Index
+  private long date;
+  private String description;
+  private String backgroundUrl;
+  @Index
+  private String place;
+  private RealmList<User> joinedUsers;
 
-    public String getName() {
-        return name;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public long getDate() {
-        return date;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setDate(long date) {
-        this.date = date;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public long getDate() {
+    return date;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public void setDate(long date) {
+    this.date = date;
+  }
 
-    public String getBackgroundUrl() {
-        return backgroundUrl;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setBackgroundUrl(String backgroundUrl) {
-        this.backgroundUrl = backgroundUrl;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public String getPlace() {
-        return place;
-    }
+  public String getBackgroundUrl() {
+    return backgroundUrl;
+  }
 
-    public void setPlace(String place) {
-        this.place = place;
-    }
+  public void setBackgroundUrl(String backgroundUrl) {
+    this.backgroundUrl = backgroundUrl;
+  }
 
-    public RealmList<User> getJoinedUsers() {
-        return joinedUsers;
-    }
+  public String getPlace() {
+    return place;
+  }
 
-    public void setJoinedUsers(RealmList<User> joinedUsers) {
-        this.joinedUsers = joinedUsers;
-    }
+  public void setPlace(String place) {
+    this.place = place;
+  }
+
+  public RealmList<User> getJoinedUsers() {
+    return joinedUsers;
+  }
+
+  public void setJoinedUsers(RealmList<User> joinedUsers) {
+    this.joinedUsers = joinedUsers;
+  }
 }

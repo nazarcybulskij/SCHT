@@ -1,8 +1,11 @@
 package ua.te.hackathon.smartcity2015.ui.main.events.browse;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
-import ua.te.hackathon.smartcity2015.ui.PresenterView;
+import ua.te.hackathon.smartcity2015.model.Event;
+import ua.te.hackathon.smartcity2015.ui.base.mvp.PresenterView;
 
 /**
  * @author victor
@@ -11,10 +14,11 @@ import ua.te.hackathon.smartcity2015.ui.PresenterView;
 public interface BrowseEventsView extends PresenterView {
 
   void showLoadingView();
+
   void hideLoadingView();
 
-  void deliverEventList(List list);
+  void deliverEventList(@NonNull List<Event> list);
 
-  void deliverLoadingError();
+  void deliverLoadingError(String error);
 
 }
