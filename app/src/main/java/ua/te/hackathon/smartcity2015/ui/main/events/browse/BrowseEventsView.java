@@ -11,6 +11,7 @@ import ua.te.hackathon.smartcity2015.ui.PresenterView;
 public interface BrowseEventsView extends PresenterView {
 
   void showLoadingView();
+
   void hideLoadingView();
 
   void deliverEventList(List list);

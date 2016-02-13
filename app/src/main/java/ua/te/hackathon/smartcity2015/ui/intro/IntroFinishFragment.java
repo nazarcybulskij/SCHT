@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +49,8 @@ public class IntroFinishFragment extends Fragment {
                            Bundle savedInstanceState) {
 
     View view = inflater.inflate(R.layout.fragment_intro_finish, container, false);
-    ButterKnife.bind(this,view);
+    ButterKnife.bind(this, view);
     return view;
-
 
 
   }
@@ -64,11 +62,11 @@ public class IntroFinishFragment extends Fragment {
   }
 
   @OnClick(R.id.login)
-  public  void onLoginClick(View v){
-     startMainActivity();
+  public void onLoginClick(View v) {
+    startMainActivity();
   }
 
-  private  void  startMainActivity(){
+  private void startMainActivity() {
     Intent intent = new Intent(getActivity(), MainActivity.class);
     startActivity(intent);
   }

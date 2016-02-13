@@ -20,7 +20,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
     val locationProvider = ReactiveLocationProvider(appContext)
     locationProvider.lastKnownLocation.subscribe(
         { location -> findEventsNearBy(location) },
-        { error -> onLocationLoadFailed(error)})
+        { error -> onLocationLoadFailed(error) })
   }
 
   private fun findEventsNearBy(location: Location) {
