@@ -1,0 +1,9 @@
+<resources>
+
+  <string name="i_want">Я хочу</string>
+  <string name="football">футбол</string>
+  <string name="create_event">Створити подію</string>
+  <string name="browse_events">Існуючі події</string>
+  <string name="submit_main_event_info">Все вірно</string>
+
+</resources>

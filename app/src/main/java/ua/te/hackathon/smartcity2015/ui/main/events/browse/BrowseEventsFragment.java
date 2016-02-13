@@ -2,7 +2,9 @@ package ua.te.hackathon.smartcity2015.ui.main.events.browse;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import ua.te.hackathon.smartcity2015.R;
+import ua.te.hackathon.smartcity2015.model.Event;
+import ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters.EventsAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +32,8 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
   @Bind(R.id.recyclerEvents)
   RecyclerView recyclerEvents;
 
+  private EventsAdapter adapter;
+
   public static BrowseEventsFragment newInstance() {
     BrowseEventsFragment fragment = new BrowseEventsFragment();
     Bundle args = new Bundle();
@@ -41,6 +47,11 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
     // Inflate the layout for this fragment
     View rootView = inflater.inflate(R.layout.fragment_browse_events, container, false);
     ButterKnife.bind(this, rootView);
+
+    recyclerEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
+    recyclerEvents.setHasFixedSize(true);
+    adapter = new EventsAdapter();
+    recyclerEvents.setAdapter(adapter);
 
     if (presenter == null) {
       presenter = new BrowseEventsPresenter(getActivity().getApplicationContext());
@@ -62,8 +73,9 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
   }
 
   @Override
-  public void deliverEventList(List list) {
-
+  public void deliverEventList(@NonNull List<Event> list) {
+    adapter.setItemList(list);
+    adapter.notifyDataSetChanged();
   }
 
   @Override

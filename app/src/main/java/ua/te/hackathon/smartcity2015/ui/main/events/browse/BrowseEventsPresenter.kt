@@ -3,7 +3,9 @@ package ua.te.hackathon.smartcity2015.ui.main.events.browse
 import android.content.Context
 import android.location.Location
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
-import ua.te.hackathon.smartcity2015.ui.Presenter
+import ua.te.hackathon.smartcity2015.model.Event
+import ua.te.hackathon.smartcity2015.ui.base.mvp.Presenter
+import java.util.*
 
 /**
  * @author victor
@@ -14,7 +16,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
 
   private var view: BrowseEventsView? = null
 
-  private var eventList: List<Object>? = null
+  private var eventList: List<Event>? = null
 
   private fun loadLastKnownLocation() {
     val locationProvider = ReactiveLocationProvider(appContext)
@@ -24,7 +26,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   }
 
   private fun findEventsNearBy(location: Location) {
-    view?.deliverEventList(null)
+    view?.deliverEventList(ArrayList())
     view?.hideLoadingView()
   }
 
@@ -44,7 +46,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
     if (eventList == null) {
       loadEvents()
     } else {
-      view.deliverEventList(eventList)
+      view.deliverEventList(eventList!!)
     }
   }
 
