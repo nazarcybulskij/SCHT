@@ -8,4 +8,19 @@
   <string name="dummy_button">Dummy Button</string>
   <string name="dummy_content">DUMMY\nCONTENT</string>
   <string name="intro_text">Hello Hackaton</string>
+
+  <string name="create_event">Створити подію</string>
+  <string name="browse_events">Існуючі події</string>
+  <string name="submit_main_event_info">Все вірно</string>
+  <string-array name="choices">
+    <item>Mercury</item>
+    <item>Venus</item>
+    <item>Earth</item>
+    <item>Mars</item>
+    <item>Jupiter</item>
+    <item>Saturn</item>
+    <item>Uranus</item>
+    <item>Neptune</item>
+  </string-array>
+
 </resources>

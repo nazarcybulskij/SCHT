@@ -25,8 +25,7 @@
     <activity
         android:name=".ui.intro.IntroActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
-        android:label="@string/title_activity_intro"
-        android:theme="@style/FullscreenTheme">
+        android:label="@string/title_activity_intro">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>

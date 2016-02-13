@@ -4,10 +4,65 @@
                 android:layout_height="match_parent"
                 tools:context="ua.te.hackathon.smartcity2015.ui.CreateEventFragment">
 
+
   <TextView
-      style="@style/TextAppearance.AppCompat.Display2"
+      android:id="@+id/textView"
+      style="@style/TextAppearance.AppCompat.Large"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"
-      android:text="Create Event"/>
+      android:layout_marginTop="18dp"
+      android:text="Я хочу" />
+
+  <Spinner
+      android:id="@+id/categorySpinner"
+      style="@style/Widget.AppCompat.Spinner.Underlined"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/textView"
+      tools:listitem="@layout/spinner_item" />
+
+  <TextView
+      android:id="@+id/categoryName"
+      style="@style/TextAppearance.AppCompat.Display1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_below="@id/categorySpinner"
+      android:text="футбол"
+      android:textColor="?attr/colorAccent" />
+
+  <Spinner
+      android:id="@+id/daySpinner"
+      style="@style/Widget.AppCompat.Spinner.Underlined"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/categoryName"
+      tools:listitem="@layout/spinner_item" />
+
+  <Spinner
+      android:id="@+id/timeSpinner"
+      style="@style/Widget.AppCompat.Spinner.Underlined"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/categoryName"
+      android:layout_toRightOf="@id/daySpinner"
+      tools:listitem="@layout/spinner_item" />
+
+  <Spinner
+      android:id="@+id/locationSpinner"
+      style="@style/Widget.AppCompat.Spinner.Underlined"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/daySpinner"
+      tools:listitem="@layout/spinner_item" />
+
+  <Button
+      android:id="@+id/submitMainInfoButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/submit_main_event_info"
+      android:layout_marginTop="8dp"
+      android:layout_below="@id/locationSpinner"
+      android:theme="@style/AccentButton"/>
 </RelativeLayout>
