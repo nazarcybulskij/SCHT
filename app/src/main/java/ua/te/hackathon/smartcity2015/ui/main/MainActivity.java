@@ -23,8 +23,8 @@ public class MainActivity extends BaseActivity implements MainView {
 
   private static MainPresenter presenter;
 
-  @Bind(R.id.toolbar)
-  Toolbar toolbar;
+//  @Bind(R.id.toolbar)
+//  Toolbar toolbar;
 
   @Bind(R.id.viewpager)
   ViewPager viewPager;
@@ -39,11 +39,12 @@ public class MainActivity extends BaseActivity implements MainView {
 
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
+    //etSupportActionBar(toolbar);
 
     setupViewPager();
 
     tabLayout.setupWithViewPager(viewPager);
+
   }
 
   @Override
