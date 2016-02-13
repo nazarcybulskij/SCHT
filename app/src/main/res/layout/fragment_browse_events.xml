@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ua.te.hackathon.smartcity2015.ui.CreateEventFragment">
+    tools:context=".ui.main.events.create.CreateEventFragment">
 
   <TextView
       android:layout_width="wrap_content"
