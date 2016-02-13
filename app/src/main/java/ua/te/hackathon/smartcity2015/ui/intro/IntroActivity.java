@@ -46,7 +46,7 @@ public class IntroActivity extends AppCompatActivity {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(IntroFragment.newInstance(R.color.blue));
     adapter.addFragment(IntroFragment.newInstance(R.color.red));
-    adapter.addFragment(IntroFragment.newInstance(R.color.green));
+    adapter.addFragment(IntroFinishFragment.newInstance(R.color.green));
     viewPagerInto.setAdapter(adapter);
     indicatordots.setViewPager(viewPagerInto);
 
