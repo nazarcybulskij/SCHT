@@ -1,9 +1,12 @@
 package ua.te.hackathon.smartcity2015.ui.intro;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,7 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
@@ -21,15 +29,25 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ua.te.hackathon.smartcity2015.R;
+import ua.te.hackathon.smartcity2015.ui.BaseActivity;
+import ua.te.hackathon.smartcity2015.ui.main.MainActivity;
+import ua.te.hackathon.smartcity2015.ui.main.MainPresenter;
+import ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsPresenter;
 
-public class IntroActivity extends AppCompatActivity {
+public class IntroActivity extends FragmentActivity implements  IntroView,GoogleApiClient.OnConnectionFailedListener{
 
 
   @Bind(R.id.intro_view_pager)
   ViewPager viewPagerInto;
   @Bind(R.id.indicator)
   PageIndicator indicatordots;
+
+  @Bind(R.id.login)
+  SignInButton  signInButton;
+
+  private static IntroPresenter presenter;
 
 
   @Override
@@ -40,16 +58,91 @@ public class IntroActivity extends AppCompatActivity {
     setContentView(R.layout.activity_intro);
     ButterKnife.bind(this);
     initViewPager();
+    initSiginButton();
+
+  }
+
+  private void initSiginButton() {
+    // [START customize_button]
+    // Customize sign-in button. The sign-in button can be displayed in
+    // multiple sizes and color schemes. It can also be contextually
+    // rendered based on the requested scopes. For example. a red button may
+    // be displayed when Google+ scopes are requested, but a white button
+    // may be displayed when only basic profile is requested. Try adding the
+    // Scopes.PLUS_LOGIN scope to the GoogleSignInOptions to see the
+
+    // [START configure_signin]
+    // Configure sign-in to request the user's ID, email address, and basic
+    // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .build();
+    // difference.
+
+    signInButton.setSize(SignInButton.SIZE_ICON_ONLY);
+    signInButton.setScopes(gso.getScopeArray());
+
   }
 
   private void initViewPager() {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(IntroFragment.newInstance(R.color.blue));
     adapter.addFragment(IntroFragment.newInstance(R.color.red));
-    adapter.addFragment(IntroFinishFragment.newInstance(R.color.green));
+    adapter.addFragment(IntroFragment.newInstance(R.color.green));
     viewPagerInto.setAdapter(adapter);
     indicatordots.setViewPager(viewPagerInto);
 
+
+  }
+
+  @Override
+  protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+    super.onPostCreate(savedInstanceState);
+
+    if (presenter == null) {
+      presenter = new IntroPresenter(getApplicationContext());
+    }
+
+    presenter.attachView(this);
+    presenter.attachActivity(this);
+  }
+
+  @OnClick(R.id.login)
+  public  void onLoginClick(View v){
+    presenter.login();
+  }
+
+  private  void  startMainActivity(){
+    Intent intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
+  }
+
+  @Override
+  public void showLoadingView() {
+    Toast.makeText(getApplicationContext(),"show",Toast.LENGTH_SHORT).show();
+  }
+
+  @Override
+  public void hideLoadingView() {
+    Toast.makeText(getApplicationContext(),"hide",Toast.LENGTH_SHORT).show();
+
+  }
+
+
+
+  @Override
+  public void success() {
+    startMainActivity();
+  }
+
+  @Override
+  public void error() {
+    Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT).show();
+
+  }
+
+  @Override
+  public void onConnectionFailed(ConnectionResult connectionResult) {
 
   }
 
