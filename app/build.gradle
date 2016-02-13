@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
   compileSdkVersion 23
@@ -11,7 +12,7 @@ android {
     versionCode 1
     versionName "1.0"
 
-    buildConfigField("String", "MAPS_API_KEY", PROP_MAPS_API_KEY)
+    buildConfigField("String", "MAPS_API_KEY", "$PROP_MAPS_API_KEY")
   }
 
   signingConfigs {
@@ -32,9 +33,15 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
 }
 
 dependencies {
+  // support for Kotlin language
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
   compile fileTree(dir: 'libs', include: ['*.jar'])
   compile "com.android.support:appcompat-v7:$supportLibraryVersion"
   compile "com.android.support:design:$supportLibraryVersion"
@@ -56,9 +63,14 @@ dependencies {
   compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
   compile 'com.squareup.okhttp3:okhttp:3.1.2'
 
+  // intro screens
+  compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+
   // google play services
   compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
   compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
+
+  compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
   // unit test dependencies
   testCompile 'junit:junit:4.12'

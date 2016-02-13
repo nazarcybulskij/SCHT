@@ -15,6 +15,6 @@ public interface BrowseEventsView extends PresenterView {
 
   void deliverEventList(List list);
 
-  void deliverLoadingError();
+  void deliverLoadingError(String error);
 
 }

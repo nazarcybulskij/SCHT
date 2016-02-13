@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
     // Required empty public constructor
   }
 
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -31,6 +31,9 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
     View rootView = inflater.inflate(R.layout.fragment_browse_events, container, false);
     ButterKnife.bind(this, rootView);
 
+    if (presenter == null) {
+      presenter = new BrowseEventsPresenter(getActivity().getApplicationContext());
+    }
 
 
     return rootView;
@@ -52,8 +55,20 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
   }
 
   @Override
-  public void deliverLoadingError() {
+  public void deliverLoadingError(String error) {
+    Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+  }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    presenter.attachView(this);
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+    presenter.detachView();
   }
 
   @Override
