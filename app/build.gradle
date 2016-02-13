@@ -10,6 +10,8 @@ android {
     targetSdkVersion 23
     versionCode 1
     versionName "1.0"
+
+    buildConfigField("String", "MAPS_API_KEY", PROP_MAPS_API_KEY)
   }
 
   signingConfigs {
@@ -53,6 +55,10 @@ dependencies {
   compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
   compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
   compile 'com.squareup.okhttp3:okhttp:3.1.2'
+
+  // google play services
+  compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+  compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
 
   // unit test dependencies
   testCompile 'junit:junit:4.12'

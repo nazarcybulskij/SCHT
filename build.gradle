@@ -15,6 +15,7 @@ buildscript {
 allprojects {
   ext {
     supportLibraryVersion="23.1.1"
+    googlePlayServicesVersion = "8.4.0"
   }
 
   repositories {
