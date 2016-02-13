@@ -33,8 +33,7 @@ public class MainActivity extends BaseActivity implements MainView {
   TabLayout tabLayout;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+  public void onCreateAuthenticated(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
 
     ButterKnife.bind(this);

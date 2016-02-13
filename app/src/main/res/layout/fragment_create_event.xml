@@ -1,18 +1,20 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="ua.te.hackathon.smartcity2015.ui.main.events.create.CreateEventFragment">
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context=".ui.main.events.create.CreateEventFragment">
 
   <TextView
       android:id="@+id/textView"
       style="@style/TextAppearance.AppCompat.Large"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
       android:layout_marginTop="18dp"
-      android:text="Я хочу" />
+      android:text="@string/i_want"/>
 
   <Spinner
       android:id="@+id/categorySpinner"
@@ -20,17 +22,17 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/textView"
-      tools:listitem="@layout/spinner_item" />
+      tools:listitem="@layout/spinner_item"/>
 
   <TextView
       android:id="@+id/categoryName"
       style="@style/TextAppearance.AppCompat.Display1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
       android:layout_below="@id/categorySpinner"
-      android:text="футбол"
-      android:textColor="?attr/colorAccent" />
+      android:layout_marginTop="8dp"
+      android:text="@string/football"
+      android:textColor="?attr/colorAccent"/>
 
   <Spinner
       android:id="@+id/daySpinner"
@@ -38,7 +40,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@id/categoryName"
-      tools:listitem="@layout/spinner_item" />
+      tools:listitem="@layout/spinner_item"/>
 
   <Spinner
       android:id="@+id/timeSpinner"
@@ -47,7 +49,7 @@
       android:layout_height="wrap_content"
       android:layout_below="@id/categoryName"
       android:layout_toRightOf="@id/daySpinner"
-      tools:listitem="@layout/spinner_item" />
+      tools:listitem="@layout/spinner_item"/>
 
   <Spinner
       android:id="@+id/locationSpinner"
@@ -55,14 +57,15 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@id/daySpinner"
-      tools:listitem="@layout/spinner_item" />
+      tools:listitem="@layout/spinner_item"/>
 
   <Button
       android:id="@+id/submitMainInfoButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/submit_main_event_info"
-      android:layout_marginTop="8dp"
       android:layout_below="@id/locationSpinner"
+      android:layout_marginTop="8dp"
+      android:text="@string/submit_main_event_info"
       android:theme="@style/AccentButton"/>
+
 </RelativeLayout>

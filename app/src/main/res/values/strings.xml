@@ -1,26 +1,9 @@
 <resources>
-  <string name="app_name">SmartCity2015</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-
-  <string name="title_activity_intro">IntroActivity</string>
-  <string name="dummy_button">Dummy Button</string>
-  <string name="dummy_content">DUMMY\nCONTENT</string>
-  <string name="intro_text">Hello Hackaton</string>
-
-  <string name="create_event">Створити подію</string>
-  <string name="browse_events">Існуючі події</string>
-  <string name="submit_main_event_info">Все вірно</string>
-  <string-array name="choices">
-    <item>Mercury</item>
-    <item>Venus</item>
-    <item>Earth</item>
-    <item>Mars</item>
-    <item>Jupiter</item>
-    <item>Saturn</item>
-    <item>Uranus</item>
-    <item>Neptune</item>
-  </string-array>
+  <string name="i_want">I want</string>
+  <string name="football">football</string>
+  <string name="create_event">Create new game</string>
+  <string name="browse_events">Upcoming games</string>
+  <string name="submit_main_event_info">Done</string>
 
 </resources>
