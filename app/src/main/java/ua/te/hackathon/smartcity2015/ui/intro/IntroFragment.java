@@ -12,11 +12,10 @@ import android.view.ViewGroup;
 import ua.te.hackathon.smartcity2015.R;
 
 
-
 public class IntroFragment extends Fragment {
 
   public static final String COLOR = "extra:color_intro";
-  int colorres ;
+  int colorres;
 
 
   public IntroFragment() {
@@ -27,7 +26,7 @@ public class IntroFragment extends Fragment {
   public static IntroFragment newInstance(int color) {
     IntroFragment fragment = new IntroFragment();
     Bundle args = new Bundle();
-    args.putInt(COLOR,color);
+    args.putInt(COLOR, color);
     fragment.setArguments(args);
     return fragment;
   }

@@ -12,7 +12,6 @@ import ua.te.hackathon.smartcity2015.R;
 public class CreateEventFragment extends Fragment {
 
 
-
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {

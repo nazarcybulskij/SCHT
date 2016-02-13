@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +26,17 @@ import ua.te.hackathon.smartcity2015.R;
 public class IntroActivity extends AppCompatActivity {
 
 
-
-
   @Bind(R.id.intro_view_pager)
-  ViewPager  viewPagerInto;
+  ViewPager viewPagerInto;
+  @Bind(R.id.indicator)
+  PageIndicator indicatordots;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_intro);
     ButterKnife.bind(this);
     initViewPager();
@@ -41,15 +45,13 @@ public class IntroActivity extends AppCompatActivity {
   private void initViewPager() {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
     adapter.addFragment(IntroFragment.newInstance(R.color.blue));
-    adapter.addFragment(IntroFragment.newInstance(R.color.red ) );
+    adapter.addFragment(IntroFragment.newInstance(R.color.red));
     adapter.addFragment(IntroFragment.newInstance(R.color.green));
     viewPagerInto.setAdapter(adapter);
+    indicatordots.setViewPager(viewPagerInto);
 
 
   }
-
-
-
 
 
   class ViewPagerAdapter extends FragmentPagerAdapter {
