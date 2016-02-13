@@ -1,5 +1,6 @@
 package ua.te.hackathon.smartcity2015.ui.main;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 
 import ua.te.hackathon.smartcity2015.ui.Presenter;
@@ -11,6 +12,12 @@ import ua.te.hackathon.smartcity2015.ui.Presenter;
 public class MainPresenter implements Presenter<MainView> {
   @Nullable
   private MainView view;
+
+  private Context appContext;
+
+  public MainPresenter(Context appContext) {
+    this.appContext = appContext;
+  }
 
   @Override
   public void attachView(MainView view) {
@@ -24,6 +31,6 @@ public class MainPresenter implements Presenter<MainView> {
 
   @Override
   public void onDestroy() {
-
+    detachView();
   }
 }
