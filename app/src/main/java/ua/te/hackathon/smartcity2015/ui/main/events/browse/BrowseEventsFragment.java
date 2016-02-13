@@ -3,6 +3,7 @@ package ua.te.hackathon.smartcity2015.ui.main.events.browse;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import ua.te.hackathon.smartcity2015.R;
 
@@ -20,8 +22,17 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
 
   private static BrowseEventsPresenter presenter;
 
-  public BrowseEventsFragment() {
-    // Required empty public constructor
+  @Bind(R.id.loadingView)
+  View loadingView;
+
+  @Bind(R.id.recyclerEvents)
+  RecyclerView recyclerEvents;
+
+  public static BrowseEventsFragment newInstance() {
+    BrowseEventsFragment fragment = new BrowseEventsFragment();
+    Bundle args = new Bundle();
+    fragment.setArguments(args);
+    return fragment;
   }
 
   @Override
@@ -35,18 +46,19 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
       presenter = new BrowseEventsPresenter(getActivity().getApplicationContext());
     }
 
-
     return rootView;
   }
 
   @Override
   public void showLoadingView() {
-
+    loadingView.setVisibility(View.VISIBLE);
+    recyclerEvents.setVisibility(View.GONE);
   }
 
   @Override
   public void hideLoadingView() {
-
+    loadingView.setVisibility(View.GONE);
+    recyclerEvents.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -75,5 +87,15 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView {
   public void onDestroyView() {
     super.onDestroyView();
     ButterKnife.unbind(this);
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    if (presenter != null) {
+      presenter.detachView();
+      presenter.onDestroy();
+    }
   }
 }

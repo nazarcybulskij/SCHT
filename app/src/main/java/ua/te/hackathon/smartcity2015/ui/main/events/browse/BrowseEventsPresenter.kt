@@ -14,19 +14,18 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
 
   private var view: BrowseEventsView? = null
 
+  private var eventList: List<Object>? = null
+
   private fun loadLastKnownLocation() {
     val locationProvider = ReactiveLocationProvider(appContext)
     locationProvider.lastKnownLocation.subscribe(
-        { location -> onLocationLoaded(location) },
+        { location -> findEventsNearBy(location) },
         { error -> onLocationLoadFailed(error)})
   }
 
-  private fun onLocationLoaded(location: Location) {
-
-  }
-
   private fun findEventsNearBy(location: Location) {
-
+    view?.deliverEventList(null)
+    view?.hideLoadingView()
   }
 
   private fun onLocationLoadFailed(error: Throwable) {
@@ -37,16 +36,16 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
     view?.showLoadingView()
 
     loadLastKnownLocation()
-
-    // loading
-
-    // loading done
-    view?.deliverEventList(null)
-    view?.hideLoadingView()
   }
 
   override fun attachView(view: BrowseEventsView) {
     this.view = view
+
+    if (eventList == null) {
+      loadEvents()
+    } else {
+      view.deliverEventList(eventList)
+    }
   }
 
   override fun detachView() {

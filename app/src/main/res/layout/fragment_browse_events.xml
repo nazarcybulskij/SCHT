@@ -1,15 +1,23 @@
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment">
+    tools:context="ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment"
+    >
 
+  <FrameLayout
+      android:id="@+id/loadingView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
 
-  <TextView
-      style="@style/TextAppearance.AppCompat.Display2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:text="Browse Events"/>
-</RelativeLayout>
+  </FrameLayout>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerEvents"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
+</FrameLayout>
