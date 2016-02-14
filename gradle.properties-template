@@ -1,2 +1,5 @@
+// build tools version
+BUILD_TOOLS=1.5.0
+
 // your maps api key
 PROP_MAPS_API_KEY=

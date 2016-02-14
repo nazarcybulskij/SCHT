@@ -13,7 +13,4 @@
     <item>@string/intro_slogan3</item>
   </string-array>
 
-  <string name="intro_slogan1" />
-  <string name="intro_slogan2" />
-  <string name="intro_slogan3" />
 </resources>

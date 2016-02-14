@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Location
 import com.google.android.gms.location.LocationRequest
 import io.realm.Realm
+import io.realm.Sort
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import ua.te.hackathon.smartcity2015.db.model.Event
 import ua.te.hackathon.smartcity2015.sync.SyncManager
@@ -46,7 +47,9 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
 
   private fun findEventsNearBy(location: Location) {
     val realm = Realm.getInstance(appContext)
-    val results = realm.where(Event::class.java).findAll()
+    val results = realm.where(Event::class.java)
+        .greaterThan("date", System.currentTimeMillis())
+        .findAllSorted("date", Sort.ASCENDING);
 
     view?.deliverEventList(results)
     view?.hideLoadingView()
