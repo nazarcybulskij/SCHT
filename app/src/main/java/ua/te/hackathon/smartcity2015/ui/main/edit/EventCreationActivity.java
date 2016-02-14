@@ -17,6 +17,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -102,6 +103,8 @@ public class EventCreationActivity extends BaseActivity
             now.get(Calendar.MONTH),
             now.get(Calendar.DAY_OF_MONTH)
         );
+        now.add(Calendar.DATE, -1);
+        dpd.setMinDate(now);
         dpd.show(getFragmentManager(), "Datepickerdialog");
         break;
       case R.id.btPickTime:
@@ -122,6 +125,7 @@ public class EventCreationActivity extends BaseActivity
     if (dateTime == null) {
       dateTime = new DateTime();
     }
+
     dateTime.setDays(dayOfMonth);
     dateTime.setMonths(monthOfYear);
     dateTime.setYears(year);
