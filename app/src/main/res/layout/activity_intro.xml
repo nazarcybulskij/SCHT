@@ -30,11 +30,11 @@
         android:layout_width="fill_parent"
         android:background="@color/transparent"
         android:paddingBottom="@dimen/height_into_buttom"
-        app:radius="10dp"
-        app:fillColor="#343434"
+        app:radius="3dp"
+        app:fillColor="#D0343434"
         app:pageColor="#FFFFFF"
         app:strokeColor="#FF000000"
-        app:strokeWidth="2dp"
+        app:strokeWidth="0dp"
         />
 
 
