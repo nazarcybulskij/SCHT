@@ -32,7 +32,7 @@
     </activity>
 
     <activity
-        android:name=".ui.main.EventCreationActivity"
+        android:name=".ui.main.edit.EventCreationActivity"
         android:label="@string/title_activity_event_creation"
         android:theme="@style/AppTheme"
         />

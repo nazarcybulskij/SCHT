@@ -102,6 +102,8 @@ dependencies {
 
   compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
+  // datetime management
+  compile 'joda-time:joda-time:2.8.2'
   // event bus
   compile 'org.greenrobot:eventbus:3.0.0'
   //realm

@@ -2,23 +2,15 @@ package ua.te.hackathon.smartcity2015.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
+import ua.te.hackathon.smartcity2015.ui.main.edit.EventCreationActivity;
 import ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment;
-import ua.te.hackathon.smartcity2015.ui.main.events.create.CreateEventFragment;
 
 public class MainActivity extends BaseActivity implements MainView {
 

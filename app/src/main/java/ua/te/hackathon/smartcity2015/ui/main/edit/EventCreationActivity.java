@@ -1,4 +1,4 @@
-package ua.te.hackathon.smartcity2015.ui.main;
+package ua.te.hackathon.smartcity2015.ui.main.edit;
 
 import android.content.Context;
 import android.content.Intent;

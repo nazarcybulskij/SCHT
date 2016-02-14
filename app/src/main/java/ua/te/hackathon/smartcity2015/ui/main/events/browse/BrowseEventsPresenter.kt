@@ -5,10 +5,6 @@ import android.location.Location
 import com.google.android.gms.location.LocationRequest
 import io.realm.Realm
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import ua.te.hackathon.smartcity2015.SmartCityApp
-import ua.te.hackathon.smartcity2015.db.EventsManager
 import ua.te.hackathon.smartcity2015.db.model.Event
 import ua.te.hackathon.smartcity2015.sync.SyncManager
 import ua.te.hackathon.smartcity2015.ui.base.mvp.Presenter
@@ -57,6 +53,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   }
 
   fun onRefresh() {
+    Logger.d(LOG_TAG, "Starting upcoming events loading")
     SyncManager.syncUpcomingEvents(appContext)
   }
 
@@ -80,16 +77,16 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   fun loadEvents() {
     view?.showLoadingView()
 
-    SmartCityApp.getApp().apiService.upcomingEvents
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .map { source -> EventsManager.updateEvents(appContext, source) }
-        .subscribe { eventList ->
-          view?.deliverEventList(eventList)
-          view?.hideLoadingView()
-        }
+    //    SmartCityApp.getApp().apiService.upcomingEvents
+    //        .subscribeOn(Schedulers.io())
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .map { source -> EventsManager.updateEvents(appContext, source) }
+    //        .subscribe { eventList ->
+    //          view?.deliverEventList(eventList)
+    //          view?.hideLoadingView()
+    //        }
 
-    //    loadLastKnownLocation()
+    loadLastKnownLocation()
   }
 
   override fun attachView(view: BrowseEventsView) {
@@ -99,6 +96,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
       loadEvents()
     } else {
       view.deliverEventList(eventList!!)
+      view.hideLoadingView()
     }
   }
 

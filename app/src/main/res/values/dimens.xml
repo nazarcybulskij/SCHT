@@ -6,5 +6,5 @@
   <dimen name="intro_text_size">20sp</dimen>
   <dimen name="height_into_buttom">100dp</dimen>
   <dimen name="width_into_buttom">300dp</dimen>
-  <dimen name="app_bar_height">150dp</dimen>
+  <dimen name="app_bar_height">200dp</dimen>
 </resources>
