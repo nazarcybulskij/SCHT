@@ -23,7 +23,7 @@ object SyncManager {
     service.upcomingEvents.subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
         .subscribe({ eventList ->
           Logger.d(LOG_TAG, "Upcoming events are loaded from server")
-//          EventsManager.updateEvents(appContext, eventList)
+          EventsManager.updateEvents(appContext, eventList)
           EventBus.getDefault().post(EventsSyncFinished())
         },
             { error ->

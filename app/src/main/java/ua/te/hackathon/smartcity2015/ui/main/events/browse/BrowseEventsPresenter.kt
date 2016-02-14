@@ -5,6 +5,7 @@ import android.location.Location
 import com.google.android.gms.location.LocationRequest
 import io.realm.Realm
 import io.realm.Sort
+import org.joda.time.DateTime
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import ua.te.hackathon.smartcity2015.db.model.Event
 import ua.te.hackathon.smartcity2015.sync.SyncManager
@@ -27,7 +28,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   private var eventList: List<Event>? = null
 
   private fun loadLastKnownLocation() {
-    // right know this method returns nothing as probably there is no
+    // right now this method returns nothing as probably there is no
     // runtime permission
 
     //    val locationProvider = ReactiveLocationProvider(appContext)
@@ -58,7 +59,6 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   fun onRefresh() {
     Logger.d(LOG_TAG, "Starting upcoming events loading")
     SyncManager.syncUpcomingEvents(appContext)
-
   }
 
   private fun onLocationLoadFailed(error: Throwable) {
@@ -80,15 +80,6 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
 
   fun loadEvents() {
     view?.showLoadingView()
-
-    //    SmartCityApp.getApp().apiService.upcomingEvents
-    //        .subscribeOn(Schedulers.io())
-    //        .observeOn(AndroidSchedulers.mainThread())
-    //        .map { source -> EventsManager.updateEvents(appContext, source) }
-    //        .subscribe { eventList ->
-    //          view?.deliverEventList(eventList)
-    //          view?.hideLoadingView()
-    //        }
 
     loadLastKnownLocation()
   }

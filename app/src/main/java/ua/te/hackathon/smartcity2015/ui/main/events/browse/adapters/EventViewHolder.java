@@ -1,5 +1,6 @@
 package ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -14,12 +15,15 @@ import ua.te.hackathon.smartcity2015.R;
  */
 public class EventViewHolder extends RecyclerView.ViewHolder {
 
+  @Nullable
   @Bind(R.id.textEventPlace)
   TextView textEventPlace;
 
+  @Nullable
   @Bind(R.id.textEventTime)
   TextView textEventTime;
 
+  @Nullable
   @Bind(R.id.textEventParticipantsCount)
   TextView textEventParticipantsCount;
 

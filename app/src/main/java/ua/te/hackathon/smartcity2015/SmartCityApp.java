@@ -1,6 +1,10 @@
 package ua.te.hackathon.smartcity2015;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
+import net.danlew.android.joda.JodaTimeAndroid;
 
 import okhttp3.OkHttpClient;
 import retrofit2.GsonConverterFactory;
@@ -10,6 +14,7 @@ import ua.te.hackathon.smartcity2015.api.SmartCityService;
 import ua.te.hackathon.smartcity2015.api.stub.SmartCityServiceStub;
 import ua.te.hackathon.smartcity2015.sync.SyncManager;
 import ua.te.hackathon.smartcity2015.utils.Logger;
+import ua.te.hackathon.smartcity2015.utils.PrefsUtil;
 
 /**
  * @author victor
@@ -35,6 +40,7 @@ public class SmartCityApp extends Application {
     INSTANCE = this;
 
     Logger.setLogLevel(Logger.LogLevel.ALL);
+    JodaTimeAndroid.init(this);
     initializeApi();
   }
 
@@ -50,5 +56,11 @@ public class SmartCityApp extends Application {
 
     //STUB
     apiService = new SmartCityServiceStub(this);
+  }
+
+  @Override
+  protected void attachBaseContext(Context base) {
+    super.attachBaseContext(base);
+    MultiDex.install(this);
   }
 }

@@ -26,10 +26,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="30dp"
         android:singleLine="true"
-        android:text="Today"
         android:textColor="@color/black_overlay"
         android:textColorHint="@color/blue"
         android:textSize="20sp"
+        android:text="Today"
         />
 
 
@@ -40,10 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:singleLine="true"
-        android:text="at 7 pm"
         android:textColor="@color/black_overlay"
         android:textColorHint="@color/blue"
         android:textSize="20sp"
+        tools:text="at 7 pm"
         />
 
     <android.support.design.widget.TextInputLayout
@@ -78,7 +78,7 @@
           android:id="@+id/etName"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Event name (optional)"
+          android:hint="Game name (optional)"
           android:inputType="text"
           android:singleLine="true"
           android:textColor="@color/black_overlay"
@@ -100,7 +100,7 @@
           android:id="@+id/etDescription"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Event description (optional)"
+          android:hint="Game description (optional)"
           android:inputType="text"
           android:singleLine="true"
           android:textColor="@color/black_overlay"
@@ -112,12 +112,12 @@
 
     <Button
         android:id="@+id/btnDone"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
-        android:textColor="@color/mdtp_white"
         android:text="@string/done"
+        android:textColor="@color/mdtp_white"
         />
   </LinearLayout>
 

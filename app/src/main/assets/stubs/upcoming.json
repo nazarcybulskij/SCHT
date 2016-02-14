@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Event 1",
     "description": "Test",
-    "date": 1456436473,
+    "date": 1456436473000,
     "place": "Boloto",
     "backgroundUrl": "www.google.com",
     "joinedUsers": [
@@ -20,7 +20,7 @@
     "id": 3,
     "name": "Event 3",
     "description": "Test",
-    "date": 1455936473,
+    "date": 1455936473000,
     "place": "Boloto",
     "backgroundUrl": "www.google.com",
     "joinedUsers": [
@@ -44,7 +44,7 @@
     "id": 2,
     "name": "Event 2",
     "description": "Test",
-    "date": 1455836473,
+    "date": 1455836473000,
     "place": "Boloto",
     "backgroundUrl": "www.google.com",
     "joinedUsers": [

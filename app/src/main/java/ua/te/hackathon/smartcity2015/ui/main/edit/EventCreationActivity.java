@@ -18,7 +18,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.joda.time.MutableDateTime;
+import org.joda.time.format.DateTimeFormat;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -31,6 +33,7 @@ import ua.te.hackathon.smartcity2015.db.DBUtil;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
+import ua.te.hackathon.smartcity2015.utils.Logger;
 import ua.te.hackathon.smartcity2015.utils.TimeUtils;
 
 import static ua.te.hackathon.smartcity2015.utils.Utils.isEmpty;
@@ -129,7 +132,6 @@ public class EventCreationActivity extends BaseActivity
       }
       Event event = new Event();
       event.setId(DBUtil.getNextId(Event.class));
-
       event.setName(text(etName));
       event.setDate(dateTime.getMillis());
       event.setDescription(text(etDescription));

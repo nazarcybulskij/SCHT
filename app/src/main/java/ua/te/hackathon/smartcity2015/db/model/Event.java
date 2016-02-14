@@ -76,4 +76,17 @@ public class Event extends RealmObject {
   public void setJoinedUsers(RealmList<User> joinedUsers) {
     this.joinedUsers = joinedUsers;
   }
+
+  public static class Helper {
+    public static String toString(Event event) {
+      return "Event{" +
+          "id=" + event.getId() +
+          ", name='" + event.getName() + '\'' +
+          ", date=" + event.getDate() +
+          ", description='" + event.getDescription() + '\'' +
+          ", backgroundUrl='" + event.getBackgroundUrl() + '\'' +
+          ", place='" + event.getPlace() + '\'' +
+          '}';
+    }
+  }
 }
