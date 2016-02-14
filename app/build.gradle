@@ -94,6 +94,7 @@ dependencies {
 
   // intro screens
   compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+  compile "com.google.android.gms:play-services-auth:$googlePlayServicesVersion"
 
   // google play services
   compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
