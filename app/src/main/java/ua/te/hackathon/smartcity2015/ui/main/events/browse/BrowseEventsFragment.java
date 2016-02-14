@@ -25,6 +25,7 @@ import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
 import ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters.EventsAdapter;
+import ua.te.hackathon.smartcity2015.utils.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,12 +95,14 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
 
   @Override
   public void deliverEventList(@NonNull List<Event> list) {
+    Logger.e("TAG", "deliverEventList");
     adapter.setItemList(list);
     adapter.notifyDataSetChanged();
   }
 
   @Override
   public void deliverLoadingError(String error) {
+    Logger.e("TAG", error);
     Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
   }
 
@@ -116,7 +119,6 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
   public void onStart() {
     super.onStart();
     presenter.attachView(this);
-    presenter.onRefresh();
   }
 
   @Override

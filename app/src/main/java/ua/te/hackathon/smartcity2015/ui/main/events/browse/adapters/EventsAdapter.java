@@ -9,6 +9,7 @@ import java.util.Locale;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.BaseRecyclerAdapter;
+import ua.te.hackathon.smartcity2015.utils.Logger;
 
 /**
  * @author victor
@@ -24,6 +25,7 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
 
   @Override
   public void onBindViewHolder(EventViewHolder holder, int position) {
+    Logger.e("TAG", "onBindViewHolder");
     Event event = getItem(position);
 
     holder.textEventPlace.setText(event.getPlace());
