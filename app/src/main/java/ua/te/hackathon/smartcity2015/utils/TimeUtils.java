@@ -19,10 +19,6 @@ public class TimeUtils {
 
   public static String getDayPresentation(@NonNull Context context, long time) {
     DateTime currentDate = new DateTime();
-    if (time < currentDate.getMillis()) {
-      return "";
-    }
-
     DateTime eventDate = new DateTime(time);
     Resources resources = context.getResources();
     Period period = new Period(currentDate, eventDate);
@@ -33,7 +29,7 @@ public class TimeUtils {
       case 1:
         return resources.getString(R.string.date_tomorrow);
       default:
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MM");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMMM");
         return formatter.print(eventDate);
     }
   }

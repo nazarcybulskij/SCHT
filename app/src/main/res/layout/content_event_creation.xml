@@ -109,6 +109,16 @@
           />
 
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:textColor="@color/mdtp_white"
+        android:text="@string/done"
+        />
   </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

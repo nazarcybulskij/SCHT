@@ -110,5 +110,6 @@
   <string name="event_time">%1$s at %2$s</string>
   <string name="signInWithGoogle">Sign In With Google Plus</string>
   <string name="action_logout">Log out</string>
+  <string name="done">Done</string>
 
 </resources>

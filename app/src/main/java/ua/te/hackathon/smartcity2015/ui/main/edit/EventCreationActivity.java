@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -67,14 +68,8 @@ public class EventCreationActivity extends BaseActivity
     ButterKnife.bind(this);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        showSnackbar(view);
-      }
-    });
+    getSupportActionBar().setTitle(R.string.create_event);
+    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
     etInputTime.setText(getCurrentTime());
   }
@@ -116,37 +111,41 @@ public class EventCreationActivity extends BaseActivity
     }
   }
 
-  private void showSnackbar(View view) {
-    Snackbar.make(view, "Click to create", Snackbar.LENGTH_LONG)
-        .setAction("Save", new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            // TODO: 14.02.16 add background image url
-            if (!isEmpty(text(etPlace)) && !isEmpty(etInputTime.getText().toString())) {
-              if (dateTime == null) {
-                dateTime = new MutableDateTime();
-              }
-              Event event = new Event();
-              event.setId(DBUtil.getNextId(Event.class));
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 
-              event.setName(text(etName));
-              event.setDate(dateTime.getMillis());
-              event.setDescription(text(etDescription));
-              event.setPlace(text(etPlace));
+  @OnClick(R.id.btnDone)
+  public void saveEvent(View view) {
+    if (!isEmpty(text(etPlace)) && !isEmpty(etInputTime.getText().toString())) {
+      if (dateTime == null) {
+        dateTime = new MutableDateTime();
+      }
+      Event event = new Event();
+      event.setId(DBUtil.getNextId(Event.class));
 
-              Realm realm = Realm.getInstance(getApplicationContext());
-              realm.beginTransaction();
-              realm.copyToRealm(event);
-              realm.commitTransaction();
+      event.setName(text(etName));
+      event.setDate(dateTime.getMillis());
+      event.setDescription(text(etDescription));
+      event.setPlace(text(etPlace));
 
-              EventBus.getDefault().post(new EventsSyncFinished());
+      Realm realm = Realm.getInstance(getApplicationContext());
+      realm.beginTransaction();
+      realm.copyToRealm(event);
+      realm.commitTransaction();
 
-              finish();
-            } else {
-              Toast.makeText(EventCreationActivity.this, "Place and date can't be empty", Toast.LENGTH_LONG);
-            }
-          }
-        }).show();
+      EventBus.getDefault().post(new EventsSyncFinished());
+
+      finish();
+    } else {
+      Toast.makeText(EventCreationActivity.this, "Place and date cannot be empty", Toast.LENGTH_LONG).show();
+    }
   }
 
   @Override
@@ -164,9 +163,10 @@ public class EventCreationActivity extends BaseActivity
   public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
     if (dateTime == null) {
       dateTime = new org.joda.time.MutableDateTime();
+      dateTime.setMillis(System.currentTimeMillis());
     }
     dateTime.setHourOfDay(hourOfDay);
-    dateTime.setMinuteOfDay(minute);
+    dateTime.setMinuteOfHour(minute);
     dateTime.setSecondOfMinute(second);
     etInputTime.setText(String.format("at %1$s", DateTime.TIME_FORMATTER.print(dateTime)));
   }

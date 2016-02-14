@@ -11,6 +11,7 @@ import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.BaseRecyclerAdapter;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.OnItemClickListener;
+import ua.te.hackathon.smartcity2015.utils.Logger;
 import ua.te.hackathon.smartcity2015.utils.TimeUtils;
 
 /**
@@ -34,6 +35,7 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
   @Override
   public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_event, parent, false);
+    Logger.d("TAG", view);
     return new EventViewHolder(view);
   }
 
@@ -55,7 +57,8 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
     if (joinedUsersCount > 0) {
       holder.textEventParticipantsCount.setText(String.format(Locale.US, "%d", joinedUsersCount));
     } else {
-      holder.textEventParticipantsCount.setVisibility(View.GONE);
+      holder.textEventParticipantsCount.setText(String.format(Locale.US, "%d", 1));
+//      holder.textEventParticipantsCount.setVisibility(View.GONE);
     }
 
     String day = TimeUtils.getDayPresentation(holder.itemView.getContext(), event.getDate());

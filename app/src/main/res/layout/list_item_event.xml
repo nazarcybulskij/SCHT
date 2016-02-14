@@ -5,21 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:paddingLeft="32dp"
     android:paddingRight="32dp"
-    android:background="?attr/selectableItemBackground"
+    android:paddingTop="16dp"
     >
 
   <TextView
       android:id="@+id/textEventPlace"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:textAppearance="?attr/textAppearanceListItem"
-      tools:text="Somewhere"
-      android:textSize="26sp"
       android:paddingBottom="4dp"
+      android:textSize="26sp"
+      tools:text="Somewhere"
       />
 
   <LinearLayout
@@ -34,9 +32,9 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_people_black_24px"
         android:drawablePadding="4dp"
+        android:minEms="4"
         android:paddingRight="8dp"
         android:textSize="18sp"
-        android:minEms="4"
         tools:text="5"
         />
 
@@ -49,7 +47,6 @@
         android:textSize="18sp"
         tools:text="19:00"
         />
-
 
   </LinearLayout>
 
