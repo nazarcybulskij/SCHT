@@ -5,17 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.joda.time.MutableDateTime;
 
 import java.util.Calendar;
 
@@ -26,14 +25,19 @@ import io.realm.Realm;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.api.model.DateTime;
 import ua.te.hackathon.smartcity2015.db.model.Event;
+import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
+import ua.te.hackathon.smartcity2015.ui.BaseActivity;
 
-import static ua.te.hackathon.smartcity2015.utils.Utils.isEmpty;
 import static ua.te.hackathon.smartcity2015.utils.Utils.text;
 
-public class EventCreationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class EventCreationActivity extends BaseActivity
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     @Bind(R.id.etInputDate)
     EditText etInputDate;
+
+    @Bind(R.id.etInputTime)
+    EditText etInputTime;
 
     @Bind(R.id.etPlace)
     EditText etPlace;
@@ -44,7 +48,7 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
     @Bind(R.id.etDescription)
     EditText etDescription;
 
-    private DateTime dateTime;
+    private org.joda.time.MutableDateTime dateTime;
 
     public static Intent startActivity(Context applicationContext) {
         Intent intent = new Intent(applicationContext, EventCreationActivity.class);
@@ -53,8 +57,7 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateAuthenticated(Bundle savedInstanceState) {
         setContentView(R.layout.activity_event_creation);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,44 +67,45 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSnackbar(view);
+                Snackbar.make(view, "Click to create", Snackbar.LENGTH_LONG)
+                        .setAction("Save", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // TODO: 14.02.16 add background image url
+                                if(dateTime == null) {
+                                    dateTime = new MutableDateTime();
+                                }
+                                Event event = new Event();
+                                event.setName(text(etName));
+                                event.setDate(dateTime.getMillis());
+                                event.setDescription(text(etDescription));
+                                event.setPlace(text(etPlace));
+
+                                Realm realm = Realm.getInstance(getApplicationContext());
+                                realm.beginTransaction();
+                                realm.copyToRealmOrUpdate(event);
+                                realm.commitTransaction();
+
+                                EventBus.getDefault().post(new EventsSyncFinished());
+
+                                finish();
+                            }
+                        }).show();
             }
         });
-        etInputDate.addTextChangedListener(new EditTextChecker(fab));
-        etPlace.addTextChangedListener(new EditTextChecker(fab));
+
+        etInputTime.setText(getCurrentTime());
     }
 
-    private void showSnackbar(View view) {
-        Snackbar.make(view, "Click to create", Snackbar.LENGTH_LONG)
-                .setAction("Save", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO: 14.02.16 add background image url
-                        if(!isEmpty(text(etPlace)) && !isEmpty(text(etInputDate))) {
-                            Event event = new Event();
-                            event.setName(text(etName));
-                            event.setDate(dateTime.getTime());
-                            event.setDescription(text(etDescription));
-                            event.setPlace(text(etPlace));
-
-                            Realm realm = Realm.getInstance(getApplicationContext());
-                            realm.beginTransaction();
-                            realm.copyToRealm(event);
-                            realm.commitTransaction();
-
-                            finish();
-                        } else {
-                            Toast.makeText(EventCreationActivity.this, "Place and date can't be empty", Toast.LENGTH_LONG);
-                        }
-                    }
-                }).show();
+    private String getCurrentTime() {
+        return DateTime.TIME_FORMATTER.print(new org.joda.time.DateTime());
     }
 
-    @OnClick({R.id.btPickDate, R.id.btPickTime})
-    public void chooseDateTime(View button){
+    @OnClick({R.id.etInputTime, R.id.etInputDate, R.id.input_date, R.id.input_time})
+    public void chooseDateTime(View button) {
         Calendar now = Calendar.getInstance();
-        switch (button.getId()){
-            case R.id.btPickDate:
+        switch (button.getId()) {
+            case R.id.etInputDate:
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
                         this,
                         now.get(Calendar.YEAR),
@@ -110,7 +114,7 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
                 );
                 dpd.show(getFragmentManager(), "Datepickerdialog");
                 break;
-            case R.id.btPickTime:
+            case R.id.etInputTime:
                 TimePickerDialog tpd = TimePickerDialog.newInstance(
                         this,
                         now.get(Calendar.HOUR),
@@ -125,49 +129,23 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        if(dateTime == null) {
-            dateTime = new DateTime();
+        if (dateTime == null) {
+            dateTime = new org.joda.time.MutableDateTime();
         }
-        dateTime.setDays(dayOfMonth);
-        dateTime.setMonths(monthOfYear);
-        dateTime.setYears(year);
-        etInputDate.setText(dateTime.get());
+        dateTime.setDayOfMonth(dayOfMonth);
+        dateTime.setMonthOfYear(monthOfYear);
+        dateTime.setYear(year);
+        etInputDate.setText(DateTime.DATE_FORMATTER.print(dateTime));
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        if(dateTime == null) {
-            Toast.makeText(this, "Set date!", Toast.LENGTH_LONG).show();
-            return;
+        if (dateTime == null) {
+            dateTime = new org.joda.time.MutableDateTime();
         }
-        dateTime.setHours(hourOfDay);
-        dateTime.setMinutes(minute);
-        dateTime.setSeconds(second);
-        etInputDate.setText(dateTime.get());
-    }
-
-    private class EditTextChecker implements TextWatcher {
-        private final View view;
-
-        public EditTextChecker(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if(!isEmpty(text(etPlace)) && !isEmpty(text(etInputDate))) {
-                showSnackbar(view);
-            }
-        }
+        dateTime.setHourOfDay(hourOfDay);
+        dateTime.setMinuteOfDay(minute);
+        dateTime.setSecondOfMinute(second);
+        etInputTime.setText(DateTime.TIME_FORMATTER.print(dateTime));
     }
 }

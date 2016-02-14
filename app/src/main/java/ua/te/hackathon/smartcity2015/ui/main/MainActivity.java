@@ -9,7 +9,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
-import ua.te.hackathon.smartcity2015.ui.main.edit.EventCreationActivity;
 import ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment;
 
 public class MainActivity extends BaseActivity implements MainView {
