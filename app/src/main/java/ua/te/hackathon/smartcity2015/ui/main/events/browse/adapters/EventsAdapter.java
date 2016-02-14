@@ -9,7 +9,7 @@ import java.util.Locale;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.BaseRecyclerAdapter;
-import ua.te.hackathon.smartcity2015.utils.Logger;
+import ua.te.hackathon.smartcity2015.utils.TimeUtils;
 
 /**
  * @author victor
@@ -34,7 +34,13 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
     } else {
       holder.textEventParticipantsCount.setVisibility(View.GONE);
     }
-    holder.textEventTime.setText(String.format(Locale.US, "%d", event.getDate()));
+
+    String day = TimeUtils.getDayPresentation(holder.itemView.getContext(), event.getDate());
+    String time = TimeUtils.getTimePresentation(holder.itemView.getContext(), event.getDate());
+
+    String absoluteTime = String.format(holder.itemView.getContext().getString(R.string.event_time), day, time);
+
+    holder.textEventTime.setText(absoluteTime);
   }
 
 }
