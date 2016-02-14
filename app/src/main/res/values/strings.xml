@@ -1,5 +1,9 @@
 <resources>
 
+  <string name="intro_slogan1">Find a game</string>
+  <string name="intro_slogan2">Create your game</string>
+  <string name="intro_slogan3">Play and have fun!</string>
+
   <string name="i_want">I want</string>
   <string name="football">football</string>
   <string name="create_event">Create new game</string>

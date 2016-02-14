@@ -4,9 +4,27 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="ua.te.hackathon.smartcity2015.ui.intro.IntroFragment">
 
+  <ImageView
+      android:id="@+id/imageIntro"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      tools:src="@mipmap/ic_launcher"
+      />
 
+  <TextView
+      android:id="@+id/textIntro"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="Slogan"
+      android:layout_marginTop="16dp"
+      android:textAppearance="?android:textAppearanceLarge"
+      android:layout_below="@id/imageIntro"
+      android:layout_centerHorizontal="true"
+      />
 
 
 </RelativeLayout>

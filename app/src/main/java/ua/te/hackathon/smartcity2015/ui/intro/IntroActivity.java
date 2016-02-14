@@ -2,6 +2,7 @@ package ua.te.hackathon.smartcity2015.ui.intro;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -46,18 +47,20 @@ public class IntroActivity extends AppCompatActivity {
 
   private void initViewPager() {
     ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-    adapter.addFragment(IntroFragment.newInstance(R.color.blue));
-    adapter.addFragment(IntroFragment.newInstance(R.color.red));
-    adapter.addFragment(IntroFinishFragment.newInstance(R.color.green));
+
+    String[] slogans = getResources().getStringArray(R.array.intro_slogans);
+
+    for (int i = 0; i < slogans.length; i++) {
+      adapter.addFragment(IntroFragment.newInstance(i));
+    }
+
     viewPagerInto.setAdapter(adapter);
     indicatordots.setViewPager(viewPagerInto);
-
-
   }
 
 
   class ViewPagerAdapter extends FragmentPagerAdapter {
-    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
 
     public ViewPagerAdapter(FragmentManager manager) {
       super(manager);
@@ -65,19 +68,17 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     public Fragment getItem(int position) {
-      return mFragmentList.get(position);
+      return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-      return mFragmentList.size();
+      return fragmentList.size();
     }
 
     public void addFragment(Fragment fragment) {
-      mFragmentList.add(fragment);
+      fragmentList.add(fragment);
     }
-
-
   }
 
 }
