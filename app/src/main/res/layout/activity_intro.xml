@@ -39,28 +39,22 @@
 
 
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/login"
-        android:layout_width="@dimen/width_into_buttom"
-        android:layout_height="@dimen/height_into_buttom"
-        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="16dp"
         android:layout_gravity="center"
+        android:background="@color/red"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:visibility="visible"
+        android:text="@string/signInWithGoogle"
+        android:textColor="@color/mdtp_white"
         />
 
-
-
-
-
-
   </LinearLayout>
-
-
-
-
 
 </RelativeLayout>

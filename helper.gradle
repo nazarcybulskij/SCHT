@@ -1,0 +1,10 @@
+ext {
+  getGradleProperty = { String propName, defValue = null ->
+    if (project.properties.containsKey(propName)) {
+      return project.properties[propName]
+    } else {
+      logger.warn("Gradle property " + propName + " not found, returning default value " + defValue)
+      return defValue;
+    }
+  }
+}
