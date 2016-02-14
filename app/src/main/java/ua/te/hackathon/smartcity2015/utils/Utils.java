@@ -54,13 +54,4 @@ public class Utils {
         return text == null || "".equals(text);
     }
 
-    public boolean isUserAuthenticated() {
-        return prefs.getBoolean(IS_AUTH, false);
-    }
-
-    public void setUserAuthenticated(boolean state) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(IS_AUTH, state);
-        editor.commit();
-    }
 }
