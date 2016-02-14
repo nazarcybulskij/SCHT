@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,11 +22,14 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import ua.te.hackathon.smartcity2015.R;
+import ua.te.hackathon.smartcity2015.SmartCityApp;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.OnItemClickListener;
 import ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters.EventsAdapter;
+import ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters.RealmEventsAdapter;
 import ua.te.hackathon.smartcity2015.utils.Logger;
 
 /**
@@ -37,12 +41,13 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
   private static BrowseEventsPresenter presenter;
 
   @Bind(R.id.recyclerEvents)
-  RecyclerView recyclerEvents;
+  ListView recyclerEvents;
 
   @Bind(R.id.swipeContainer)
   SwipeRefreshLayout swipeToRefresh;
 
-  private EventsAdapter adapter;
+  private RealmEventsAdapter adapter;
+  Realm realm = Realm.getInstance(SmartCityApp.getApp());
 
   public static BrowseEventsFragment newInstance() {
     BrowseEventsFragment fragment = new BrowseEventsFragment();
@@ -76,10 +81,13 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    recyclerEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
-    recyclerEvents.setHasFixedSize(true);
-    adapter = new EventsAdapter();
-    adapter.setItemClickListener(new OnEventClickListener());
+    //recyclerEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
+   // recyclerEvents.setHasFixedSize(true);
+
+    adapter = new RealmEventsAdapter(getContext(),R.layout.item_event,realm.where(Event.class).findAll(),true);
+
+
+    //adapter.setItemClickListener(new OnEventClickListener());
     recyclerEvents.setAdapter(adapter);
 
     swipeToRefresh.setOnRefreshListener(this);
@@ -118,7 +126,7 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
   @Override
   public void deliverEventList(@NonNull List<Event> list) {
     Logger.d(LOG_TAG, "deliverEventList");
-    adapter.setItemList(list);
+    //adapter.setItemList(list);
     adapter.notifyDataSetChanged();
   }
 
