@@ -34,24 +34,14 @@ public class IntroPresenter implements Presenter<IntroView> {
 
   private GoogleApiHelper googleApiHelper;
 
-  public static final int RC_SIGN_IN = 9001;
-  public static final int REQUEST_SIGNUP = 0;
-
 
   public IntroPresenter(Context appContext) {
     this.appContext = appContext;
+    this.googleApiHelper = new GoogleApiHelper(appContext);
   }
 
   public void login(FragmentActivity activity){
-    if (view != null) {
-      view.showLoadingView();
-    }
-
     googleApiHelper.startGoogleRegistration(activity);
-
-    if (view != null) {
-      view.hideLoadingView();
-    }
   }
 
   public void handleOnActivityResult(int requestCode, int resultCode, Intent data) {
@@ -71,6 +61,7 @@ public class IntroPresenter implements Presenter<IntroView> {
   @Override
   public void onDestroy() {
     detachView();
+    googleApiHelper = null;
   }
 
 }

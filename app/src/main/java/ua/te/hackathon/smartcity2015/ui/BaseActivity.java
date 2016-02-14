@@ -10,7 +10,6 @@ import java.util.Locale;
 
 import ua.te.hackathon.smartcity2015.ui.intro.IntroActivity;
 import ua.te.hackathon.smartcity2015.utils.LoggedUser;
-import ua.te.hackathon.smartcity2015.utils.Utils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -19,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     onPreCreate(savedInstanceState);
     super.onCreate(savedInstanceState);
 
-    if (new Utils(this).isUserAuthenticated()) {
+    if (isUserAuthenticated()) {
       onCreateAuthenticated(savedInstanceState);
     } else {
       onCreateUnauthenticated(savedInstanceState);

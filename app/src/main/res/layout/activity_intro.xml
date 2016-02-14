@@ -31,13 +31,12 @@
         android:background="@color/transparent"
         android:paddingBottom="@dimen/height_into_buttom"
         app:radius="3dp"
+        android:layout_marginBottom="16dp"
         app:fillColor="#D0343434"
         app:pageColor="#FFFFFF"
         app:strokeColor="#FF000000"
         app:strokeWidth="0dp"
         />
-
-
 
     <Button
         android:id="@+id/login"
