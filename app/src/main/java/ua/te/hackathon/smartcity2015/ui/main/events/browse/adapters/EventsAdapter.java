@@ -1,5 +1,6 @@
 package ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters;
 
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import java.util.Locale;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.ui.base.adapters.BaseRecyclerAdapter;
+import ua.te.hackathon.smartcity2015.ui.base.adapters.OnItemClickListener;
 import ua.te.hackathon.smartcity2015.utils.TimeUtils;
 
 /**
@@ -17,6 +19,18 @@ import ua.te.hackathon.smartcity2015.utils.TimeUtils;
  */
 public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
 
+  @Nullable
+  private OnItemClickListener itemClickListener;
+
+  @Nullable
+  public OnItemClickListener getItemClickListener() {
+    return itemClickListener;
+  }
+
+  public void setItemClickListener(@Nullable OnItemClickListener itemClickListener) {
+    this.itemClickListener = itemClickListener;
+  }
+
   @Override
   public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_event, parent, false);
@@ -24,8 +38,17 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
   }
 
   @Override
-  public void onBindViewHolder(EventViewHolder holder, int position) {
+  public void onBindViewHolder(EventViewHolder holder, final int position) {
     Event event = getItem(position);
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if (itemClickListener != null) {
+          itemClickListener.onItemClicked(position);
+        }
+      }
+    });
 
     holder.textEventPlace.setText(event.getPlace());
     int joinedUsersCount = event.getJoinedUsers().size();

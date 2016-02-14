@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.api.model.DateTime;
+import ua.te.hackathon.smartcity2015.db.DBUtil;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
@@ -70,6 +71,7 @@ public class EventCreationActivity extends BaseActivity
               public void onClick(View v) {
                 // TODO: 14.02.16 add background image url
                 Event event = new Event();
+                event.setId(DBUtil.getNextId(Event.class));
                 event.setName(text(etName));
                 event.setDate(dateTime.getTime());
                 event.setDescription(text(etDescription));

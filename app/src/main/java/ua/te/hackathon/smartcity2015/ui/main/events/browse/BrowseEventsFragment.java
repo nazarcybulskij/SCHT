@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
+import ua.te.hackathon.smartcity2015.ui.base.adapters.OnItemClickListener;
 import ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters.EventsAdapter;
 import ua.te.hackathon.smartcity2015.utils.Logger;
 
@@ -78,10 +79,20 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
     recyclerEvents.setLayoutManager(new LinearLayoutManager(getActivity()));
     recyclerEvents.setHasFixedSize(true);
     adapter = new EventsAdapter();
+    adapter.setItemClickListener(new OnEventClickListener());
     recyclerEvents.setAdapter(adapter);
 
     swipeToRefresh.setOnRefreshListener(this);
     swipeToRefresh.setNestedScrollingEnabled(false);
+  }
+
+  private class OnEventClickListener implements OnItemClickListener {
+    @Override
+    public void onItemClicked(int pos) {
+      Event event = adapter.getItem(pos);
+
+      // open new activity, where user can join
+    }
   }
 
   @Override
