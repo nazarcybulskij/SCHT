@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_id": "famous-archway-122020",
+    "project_number": "271039858679",
+    "name": "SCHT"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271039858679:android:564dc3bbcb5cb628",
+        "client_id": "android:ua.te.hackathon.smartcity2015",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "ua.te.hackathon.smartcity2015"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271039858679-c9e84ur4uiunuj511cpkegbprkt9k3mb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ua.te.hackathon.smartcity2015",
+            "certificate_hash": "0121F9708784AD7152DD4D3AE21A7C1CE7B40934"
+          }
+        },
+        {
+          "client_id": "271039858679-37k0io10r4tlkmorh5i99rtqvvvd4qvn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
