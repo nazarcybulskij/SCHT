@@ -17,6 +17,10 @@ public abstract class BaseRecyclerAdapter<T, V extends RecyclerView.ViewHolder> 
     this.itemList = itemList;
   }
 
+  public T getItem(int pos) {
+    return itemList == null ? null : itemList.get(pos);
+  }
+
   @Override
   public int getItemCount() {
     return itemList == null ? 0 : itemList.size();

@@ -1,4 +1,4 @@
-package ua.te.hackathon.smartcity2015.model;
+package ua.te.hackathon.smartcity2015.db.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

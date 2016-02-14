@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "name": "Event 1",
+    "description": "Test",
+    "date": 148654864,
+    "place": "Boloto",
+    "backgroundUrl": "www.google.com",
+    "joinedUsers": [
+      {
+        "nickname": "owner",
+        "name": "John",
+        "surname": "Doe",
+        "avatarUrl": "www.google.com",
+        "phone": "380964851861"
+      }
+    ]
+  }
+]

@@ -101,6 +101,8 @@ dependencies {
 
   compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
+  // event bus
+  compile 'org.greenrobot:eventbus:3.0.0'
   //realm
   compile 'io.realm:realm-android:0.87.4'
 

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import ua.te.hackathon.smartcity2015.model.Event;
+import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.ui.base.mvp.PresenterView;
 
 /**
