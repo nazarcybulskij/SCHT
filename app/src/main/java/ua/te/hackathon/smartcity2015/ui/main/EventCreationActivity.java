@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -23,7 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import ua.te.hackathon.smartcity2015.R;
-import ua.te.hackathon.smartcity2015.model.Event;
+import ua.te.hackathon.smartcity2015.api.model.DateTime;
+import ua.te.hackathon.smartcity2015.db.model.Event;
 
 import static ua.te.hackathon.smartcity2015.utils.Utils.date;
 import static ua.te.hackathon.smartcity2015.utils.Utils.text;
@@ -41,8 +43,8 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
 
     @Bind(R.id.etDescription)
     EditText etDescription;
-    private long date;
-    private long time;
+
+    private DateTime dateTime;
 
     public static Intent startActivity(Context applicationContext) {
         Intent intent = new Intent(applicationContext, EventCreationActivity.class);
@@ -69,7 +71,7 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
                                 // TODO: 14.02.16 add background image url
                                 Event event = new Event();
                                 event.setName(text(etName));
-                                event.setDate(date + time);
+                                event.setDate(dateTime.getTime());
                                 event.setDescription(text(etDescription));
                                 event.setPlace(text(etPlace));
 
@@ -86,7 +88,7 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
     }
 
     @OnClick({R.id.btPickDate, R.id.btPickTime})
-    public void choosDateTime(View button){
+    public void chooseDateTime(View button){
         Calendar now = Calendar.getInstance();
         switch (button.getId()){
             case R.id.btPickDate:
@@ -113,22 +115,24 @@ public class EventCreationActivity extends AppCompatActivity implements DatePick
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar date = GregorianCalendar.getInstance();
-        date.set(year, monthOfYear, dayOfMonth);
-        Date dat = date.getTime();
-        this.date = dat.getTime();
-        date.setTimeInMillis(this.date + this.time);
-        etInputDate.setText(dat.toString());
+        if(dateTime == null) {
+            dateTime = new DateTime();
+        }
+        dateTime.setDays(dayOfMonth);
+        dateTime.setMonths(monthOfYear);
+        dateTime.setYears(year);
+        etInputDate.setText(dateTime.get());
     }
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        Calendar date = GregorianCalendar.getInstance();
-
-        Date dat = date.getTime();
-        this.time = dat.getTime();
-        date.setTimeInMillis(this.date + this.time);
-        etInputDate.setText(dat.toString());
-
+        if(dateTime == null) {
+            Toast.makeText(this, "Set date!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        dateTime.setHours(hourOfDay);
+        dateTime.setMinutes(minute);
+        dateTime.setSeconds(second);
+        etInputDate.setText(dateTime.get());
     }
 }

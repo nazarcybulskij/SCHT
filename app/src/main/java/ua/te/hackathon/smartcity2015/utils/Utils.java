@@ -1,6 +1,5 @@
 package ua.te.hackathon.smartcity2015.utils;
 
-<<<<<<< HEAD
 import android.widget.EditText;
 
 import java.text.DateFormat;
