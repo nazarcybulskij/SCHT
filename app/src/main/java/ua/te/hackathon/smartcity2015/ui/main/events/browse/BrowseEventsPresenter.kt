@@ -84,9 +84,12 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .map { source -> EventsManager.updateEvents(appContext, source) }
-    .subscribe { eventList -> view?.deliverEventList(eventList) }
+        .subscribe { eventList ->
+          view?.deliverEventList(eventList)
+          view?.hideLoadingView()
+        }
 
-//    loadLastKnownLocation()
+    //    loadLastKnownLocation()
   }
 
   override fun attachView(view: BrowseEventsView) {

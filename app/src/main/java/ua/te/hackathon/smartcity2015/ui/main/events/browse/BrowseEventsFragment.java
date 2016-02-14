@@ -85,11 +85,17 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
 
   @Override
   public void showLoadingView() {
-    swipeToRefresh.setRefreshing(true);
+    Logger.e("TAG", "showLoadingView");
+    swipeToRefresh.post(new Runnable() {
+      @Override public void run() {
+        swipeToRefresh.setRefreshing(true);
+      }
+    });
   }
 
   @Override
   public void hideLoadingView() {
+    Logger.e("TAG", "hideLoadingView");
     swipeToRefresh.setRefreshing(false);
   }
 
