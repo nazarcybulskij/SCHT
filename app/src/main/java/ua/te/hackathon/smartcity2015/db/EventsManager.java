@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 import ua.te.hackathon.smartcity2015.api.model.Event;
 import ua.te.hackathon.smartcity2015.db.model.User;
 
@@ -15,18 +16,20 @@ import ua.te.hackathon.smartcity2015.db.model.User;
  */
 public class EventsManager {
 
-  public static void updateEvents(Context context, List<Event> eventList) {
+  public static List<ua.te.hackathon.smartcity2015.db.model.Event> updateEvents(Context context, List<Event> eventList) {
     Realm realm = Realm.getInstance(context);
     realm.beginTransaction();
     realm.clear(ua.te.hackathon.smartcity2015.db.model.Event.class);
-    realm.commitTransaction();
+    realm.clear(User.class);
 
-    realm.beginTransaction();
+    RealmList<ua.te.hackathon.smartcity2015.db.model.Event> results = new RealmList<>();
+
     for (Event event : eventList) {
       ua.te.hackathon.smartcity2015.db.model.Event dbEvent = realm.createObject(ua.te.hackathon.smartcity2015.db.model.Event.class);
       dbEvent.setId(event.getId());
       dbEvent.setName(event.getName());
       dbEvent.setDate(event.getDate());
+      dbEvent.setPlace(event.getPlace());
       dbEvent.setDescription(event.getDescription());
       dbEvent.setBackgroundUrl(event.getBackgroundUrl());
 
@@ -38,10 +41,16 @@ public class EventsManager {
         dbUser.setSurname(user.getSurname());
         dbUser.setAvatarResourcesUrl(user.getAvatarUrl());
         dbUser.setPhone(user.getPhone());
+        realm.copyToRealm(dbEvent);
+        joinedUsers.add(dbUser);
       }
       dbEvent.setJoinedUsers(joinedUsers);
+      realm.copyToRealm(dbEvent);
+      results.add(dbEvent);
     }
     realm.commitTransaction();
+
+    return results;
   }
 
 }

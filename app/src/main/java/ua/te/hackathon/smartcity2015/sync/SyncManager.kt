@@ -6,6 +6,7 @@ import rx.schedulers.Schedulers
 import ua.te.hackathon.smartcity2015.SmartCityApp
 import ua.te.hackathon.smartcity2015.db.EventsManager
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished
+import ua.te.hackathon.smartcity2015.utils.Logger
 
 /**
  * @author victor

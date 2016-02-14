@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import ua.te.hackathon.smartcity2015.api.SmartCityService;
 import ua.te.hackathon.smartcity2015.api.stub.SmartCityServiceStub;
 import ua.te.hackathon.smartcity2015.sync.SyncManager;
+import ua.te.hackathon.smartcity2015.utils.Logger;
 
 /**
  * @author victor
@@ -33,6 +34,7 @@ public class SmartCityApp extends Application {
     super.onCreate();
     INSTANCE = this;
 
+    Logger.setLogLevel(Logger.LogLevel.ALL);
     initializeApi();
   }
 

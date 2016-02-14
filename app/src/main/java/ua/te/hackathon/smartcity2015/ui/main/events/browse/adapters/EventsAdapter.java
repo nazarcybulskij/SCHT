@@ -25,7 +25,6 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
 
   @Override
   public void onBindViewHolder(EventViewHolder holder, int position) {
-    Logger.e("TAG", "onBindViewHolder");
     Event event = getItem(position);
 
     holder.textEventPlace.setText(event.getPlace());

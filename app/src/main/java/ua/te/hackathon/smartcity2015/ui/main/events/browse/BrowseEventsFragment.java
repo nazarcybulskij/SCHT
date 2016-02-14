@@ -112,6 +112,7 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
       presenter.loadEvents();
     } else {
       deliverLoadingError(event.getError().getMessage());
+      swipeToRefresh.setRefreshing(false);
     }
   }
 
