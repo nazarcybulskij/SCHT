@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,9 +16,9 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.joda.time.MutableDateTime;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,14 +30,19 @@ import ua.te.hackathon.smartcity2015.db.DBUtil;
 import ua.te.hackathon.smartcity2015.db.model.Event;
 import ua.te.hackathon.smartcity2015.sync.events.EventsSyncFinished;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
+import ua.te.hackathon.smartcity2015.utils.TimeUtils;
 
+import static ua.te.hackathon.smartcity2015.utils.Utils.isEmpty;
 import static ua.te.hackathon.smartcity2015.utils.Utils.text;
 
 public class EventCreationActivity extends BaseActivity
     implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
   @Bind(R.id.etInputDate)
-  EditText etInputDate;
+  Button etInputDate;
+
+  @Bind(R.id.etInputTime)
+  Button etInputTime;
 
   @Bind(R.id.etPlace)
   EditText etPlace;
@@ -47,7 +53,7 @@ public class EventCreationActivity extends BaseActivity
   @Bind(R.id.etDescription)
   EditText etDescription;
 
-  private DateTime dateTime;
+  private org.joda.time.MutableDateTime dateTime;
 
   public static Intent startActivity(Context applicationContext) {
     Intent intent = new Intent(applicationContext, EventCreationActivity.class);
@@ -66,48 +72,39 @@ public class EventCreationActivity extends BaseActivity
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Snackbar.make(view, "Click to create", Snackbar.LENGTH_LONG)
-            .setAction("Save", new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                // TODO: 14.02.16 add background image url
-                Event event = new Event();
-                event.setId(DBUtil.getNextId(Event.class));
-                event.setName(text(etName));
-                event.setDate(dateTime.getTime());
-                event.setDescription(text(etDescription));
-                event.setPlace(text(etPlace));
-
-                Realm realm = Realm.getInstance(getApplicationContext());
-                realm.beginTransaction();
-                realm.copyToRealm(event);
-                realm.commitTransaction();
-
-                EventBus.getDefault().post(new EventsSyncFinished());
-
-                finish();
-              }
-            }).show();
+        showSnackbar(view);
       }
     });
+
+    etInputTime.setText(getCurrentTime());
   }
 
-  @OnClick({R.id.btPickDate, R.id.btPickTime})
+  private String getCurrentTime() {
+    return DateTime.TIME_FORMATTER.print(new org.joda.time.DateTime());
+  }
+
+  @OnClick({R.id.etInputTime, R.id.etInputDate})
   public void chooseDateTime(View button) {
     Calendar now = Calendar.getInstance();
     switch (button.getId()) {
-      case R.id.btPickDate:
+      case R.id.etInputDate:
         DatePickerDialog dpd = DatePickerDialog.newInstance(
             this,
             now.get(Calendar.YEAR),
             now.get(Calendar.MONTH),
             now.get(Calendar.DAY_OF_MONTH)
         );
-        now.add(Calendar.DATE, -1);
-        dpd.setMinDate(now);
+
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.HOUR, 1);
+        Calendar maxDate = Calendar.getInstance();
+        maxDate.setTimeInMillis(minDate.getTimeInMillis());
+        maxDate.add(Calendar.DATE, 7);
+        dpd.setMinDate(minDate);
+        dpd.setMaxDate(maxDate);
         dpd.show(getFragmentManager(), "Datepickerdialog");
         break;
-      case R.id.btPickTime:
+      case R.id.etInputTime:
         TimePickerDialog tpd = TimePickerDialog.newInstance(
             this,
             now.get(Calendar.HOUR),
@@ -117,30 +114,60 @@ public class EventCreationActivity extends BaseActivity
         tpd.show(getFragmentManager(), "Timepickerdialog");
         break;
     }
+  }
 
+  private void showSnackbar(View view) {
+    Snackbar.make(view, "Click to create", Snackbar.LENGTH_LONG)
+        .setAction("Save", new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            // TODO: 14.02.16 add background image url
+            if (!isEmpty(text(etPlace)) && !isEmpty(etInputTime.getText().toString())) {
+              if (dateTime == null) {
+                dateTime = new MutableDateTime();
+              }
+              Event event = new Event();
+              event.setId(DBUtil.getNextId(Event.class));
+
+              event.setName(text(etName));
+              event.setDate(dateTime.getMillis());
+              event.setDescription(text(etDescription));
+              event.setPlace(text(etPlace));
+
+              Realm realm = Realm.getInstance(getApplicationContext());
+              realm.beginTransaction();
+              realm.copyToRealm(event);
+              realm.commitTransaction();
+
+              EventBus.getDefault().post(new EventsSyncFinished());
+
+              finish();
+            } else {
+              Toast.makeText(EventCreationActivity.this, "Place and date can't be empty", Toast.LENGTH_LONG);
+            }
+          }
+        }).show();
   }
 
   @Override
   public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
     if (dateTime == null) {
-      dateTime = new DateTime();
+      dateTime = new org.joda.time.MutableDateTime();
     }
-
-    dateTime.setDays(dayOfMonth);
-    dateTime.setMonths(monthOfYear);
-    dateTime.setYears(year);
-    etInputDate.setText(dateTime.get());
+    dateTime.setDayOfMonth(dayOfMonth);
+    dateTime.setMonthOfYear(monthOfYear);
+    dateTime.setYear(year);
+    etInputDate.setText(TimeUtils.getDayPresentation(this, dateTime.getMillis()));
   }
 
   @Override
   public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
     if (dateTime == null) {
-      Toast.makeText(this, "Set date!", Toast.LENGTH_LONG).show();
-      return;
+      dateTime = new org.joda.time.MutableDateTime();
     }
-    dateTime.setHours(hourOfDay);
-    dateTime.setMinutes(minute);
-    dateTime.setSeconds(second);
-    etInputDate.setText(dateTime.get());
+    dateTime.setHourOfDay(hourOfDay);
+    dateTime.setMinuteOfDay(minute);
+    dateTime.setSecondOfMinute(second);
+    etInputTime.setText(String.format("at %1$s", DateTime.TIME_FORMATTER.print(dateTime)));
   }
 }

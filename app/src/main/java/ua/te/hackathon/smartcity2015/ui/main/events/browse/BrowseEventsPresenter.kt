@@ -58,6 +58,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   fun onRefresh() {
     Logger.d(LOG_TAG, "Starting upcoming events loading")
     SyncManager.syncUpcomingEvents(appContext)
+
   }
 
   private fun onLocationLoadFailed(error: Throwable) {

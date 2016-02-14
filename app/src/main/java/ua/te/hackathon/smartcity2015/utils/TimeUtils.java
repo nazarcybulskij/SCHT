@@ -39,11 +39,6 @@ public class TimeUtils {
   }
 
   public static String getTimePresentation(@NonNull Context context, long time) {
-    DateTime currentDate = new DateTime();
-    if (time < currentDate.getMillis()) {
-      return "";
-    }
-
     DateTime eventDate = new DateTime(time);
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm");
