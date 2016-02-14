@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import java.util.Locale;
 
 import ua.te.hackathon.smartcity2015.ui.intro.IntroActivity;
+import ua.te.hackathon.smartcity2015.utils.Utils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     onPreCreate(savedInstanceState);
     super.onCreate(savedInstanceState);
 
-    if (isUserAuthenticated()) {
+    if (new Utils(this).isUserAuthenticated()) {
       onCreateAuthenticated(savedInstanceState);
     } else {
       onCreateUnauthenticated(savedInstanceState);

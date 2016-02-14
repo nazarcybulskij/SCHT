@@ -40,6 +40,7 @@ import ua.te.hackathon.smartcity2015.R;
 import ua.te.hackathon.smartcity2015.ui.BaseActivity;
 import ua.te.hackathon.smartcity2015.ui.main.MainActivity;
 import ua.te.hackathon.smartcity2015.ui.main.MainPresenter;
+import ua.te.hackathon.smartcity2015.utils.Utils;
 
 public class IntroActivity extends FragmentActivity implements  IntroView {
 
@@ -144,6 +145,7 @@ public class IntroActivity extends FragmentActivity implements  IntroView {
 
   private  void  startMainActivity(){
     Intent intent = new Intent(this, MainActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     startActivity(intent);
   }
 
@@ -162,13 +164,14 @@ public class IntroActivity extends FragmentActivity implements  IntroView {
 
   @Override
   public void success() {
-    Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+    new Utils(this).setUserAuthenticated(true);
     startMainActivity();
   }
 
   @Override
   public void error() {
-    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+    new Utils(this).setUserAuthenticated(false);
+
 
   }
 
