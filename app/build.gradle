@@ -94,6 +94,7 @@ dependencies {
 
   // intro screens
   compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+  compile "com.google.android.gms:play-services-auth:$googlePlayServicesVersion"
 
   // google play services
   compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
@@ -101,6 +102,8 @@ dependencies {
 
   compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
+  // event bus
+  compile 'org.greenrobot:eventbus:3.0.0'
   //realm
   compile 'io.realm:realm-android:0.87.4'
 

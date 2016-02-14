@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <array name="intro_icons">
+    <item>@drawable/ic_explore_black_48px</item>
+    <item>@drawable/ic_create_black_48px</item>
+    <item>@drawable/ic_have_fun_black_48px</item>
+  </array>
+
+  <string-array name="intro_slogans">
+    <item>@string/intro_slogan1</item>
+    <item>@string/intro_slogan2</item>
+    <item>@string/intro_slogan3</item>
+  </string-array>
+
+</resources>

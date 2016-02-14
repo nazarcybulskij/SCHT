@@ -1,4 +1,5 @@
-<FrameLayout
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipeContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,18 +7,12 @@
     tools:context="ua.te.hackathon.smartcity2015.ui.main.events.browse.BrowseEventsFragment"
     >
 
-  <FrameLayout
-      android:id="@+id/loadingView"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-
-  </FrameLayout>
-
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recyclerEvents"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      tools:listitem="@layout/list_item_event"
       />
 
-</FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
+

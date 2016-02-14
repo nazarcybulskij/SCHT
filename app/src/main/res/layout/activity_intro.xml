@@ -16,19 +16,51 @@
   </android.support.v4.view.ViewPager>
 
 
-  <com.viewpagerindicator.CirclePageIndicator
-      android:id="@+id/indicator"
-      android:padding="10dip"
+  <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_width="fill_parent"
-      android:background="@color/transparent"
       android:layout_alignParentBottom="true"
-      app:radius="10dp"
-      app:fillColor="#343434"
-      app:pageColor="#FFFFFF"
-      app:strokeColor="#FF000000"
-      app:strokeWidth="2dp"
-      />
+      android:orientation="vertical">
+
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="@color/transparent"
+        android:paddingBottom="@dimen/height_into_buttom"
+        app:radius="3dp"
+        app:fillColor="#D0343434"
+        app:pageColor="#FFFFFF"
+        app:strokeColor="#FF000000"
+        app:strokeWidth="0dp"
+        />
+
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login"
+        android:layout_width="@dimen/width_into_buttom"
+        android:layout_height="@dimen/height_into_buttom"
+        android:layout_centerInParent="true"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="visible"
+        />
+
+
+
+
+
+
+  </LinearLayout>
+
+
+
 
 
 </RelativeLayout>

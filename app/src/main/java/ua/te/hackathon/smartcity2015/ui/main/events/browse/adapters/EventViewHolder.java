@@ -2,14 +2,27 @@ package ua.te.hackathon.smartcity2015.ui.main.events.browse.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import ua.te.hackathon.smartcity2015.R;
 
 /**
  * @author victor
  * @since 2016-02-14
  */
 public class EventViewHolder extends RecyclerView.ViewHolder {
+
+  @Bind(R.id.textEventPlace)
+  TextView textEventPlace;
+
+  @Bind(R.id.textEventTime)
+  TextView textEventTime;
+
+  @Bind(R.id.textEventParticipantsCount)
+  TextView textEventParticipantsCount;
+
   public EventViewHolder(View itemView) {
     super(itemView);
     ButterKnife.bind(this, itemView);

@@ -5,10 +5,16 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.OptionalPendingResult;
 
 import java.util.Locale;
 
 import ua.te.hackathon.smartcity2015.ui.intro.IntroActivity;
+import ua.te.hackathon.smartcity2015.utils.Utils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -17,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     onPreCreate(savedInstanceState);
     super.onCreate(savedInstanceState);
 
-    if (isUserAuthenticated()) {
+    if (new Utils(this).isUserAuthenticated()) {
       onCreateAuthenticated(savedInstanceState);
     } else {
       onCreateUnauthenticated(savedInstanceState);
@@ -39,7 +45,8 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   private boolean isUserAuthenticated() {
-    return true;
+      return  true;
+
   }
 
   private void setUkrainianLocale() {
