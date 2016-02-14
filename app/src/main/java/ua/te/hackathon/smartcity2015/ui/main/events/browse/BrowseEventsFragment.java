@@ -31,6 +31,7 @@ import ua.te.hackathon.smartcity2015.utils.Logger;
  * A simple {@link Fragment} subclass.
  */
 public class BrowseEventsFragment extends Fragment implements BrowseEventsView, SwipeRefreshLayout.OnRefreshListener {
+  public static final String LOG_TAG = Logger.getLogTag(BrowseEventsFragment.class);
 
   private static BrowseEventsPresenter presenter;
 
@@ -85,24 +86,34 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
 
   @Override
   public void showLoadingView() {
-    swipeToRefresh.setRefreshing(true);
+    Logger.d(LOG_TAG, "showLoadingView");
+    swipeToRefresh.post(new Runnable() {
+      @Override public void run() {
+        swipeToRefresh.setRefreshing(true);
+      }
+    });
   }
 
   @Override
   public void hideLoadingView() {
-    swipeToRefresh.setRefreshing(false);
+    Logger.d(LOG_TAG, "hideLoadingView");
+    swipeToRefresh.post(new Runnable() {
+      @Override public void run() {
+        swipeToRefresh.setRefreshing(false);
+      }
+    });
   }
 
   @Override
   public void deliverEventList(@NonNull List<Event> list) {
-    Logger.e("TAG", "deliverEventList");
+    Logger.d(LOG_TAG, "deliverEventList");
     adapter.setItemList(list);
     adapter.notifyDataSetChanged();
   }
 
   @Override
   public void deliverLoadingError(String error) {
-    Logger.e("TAG", error);
+    Logger.e(LOG_TAG, error);
     Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
   }
 
@@ -112,7 +123,7 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
       presenter.loadEvents();
     } else {
       deliverLoadingError(event.getError().getMessage());
-      swipeToRefresh.setRefreshing(false);
+      hideLoadingView();
     }
   }
 
@@ -147,7 +158,8 @@ public class BrowseEventsFragment extends Fragment implements BrowseEventsView, 
 
   @Override
   public void onRefresh() {
-    if (presenter != null && !swipeToRefresh.isRefreshing()) {
+    Logger.d(LOG_TAG, "Upcoming events refresh is triggered by user");
+    if (presenter != null) {
       presenter.onRefresh();
     }
   }

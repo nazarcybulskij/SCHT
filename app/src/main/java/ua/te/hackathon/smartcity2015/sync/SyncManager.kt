@@ -14,16 +14,20 @@ import ua.te.hackathon.smartcity2015.utils.Logger
  * @since 2016-02-14
  */
 object SyncManager {
+  private val LOG_TAG = Logger.getLogTag(SyncManager::class.java)
 
   fun syncUpcomingEvents(appContext: Context) {
+    Logger.d(LOG_TAG, "Upcoming events sync is triggered")
     val service = SmartCityApp.getApp().apiService
 
     service.upcomingEvents.subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
         .subscribe({ eventList ->
-          EventsManager.updateEvents(appContext, eventList)
+          Logger.d(LOG_TAG, "Upcoming events are loaded from server")
+//          EventsManager.updateEvents(appContext, eventList)
           EventBus.getDefault().post(EventsSyncFinished())
         },
             { error ->
+              Logger.e(LOG_TAG, "Error occurred during loading of upcoming events")
               EventBus.getDefault().post(EventsSyncFinished(error))
             })
   }

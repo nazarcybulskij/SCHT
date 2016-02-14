@@ -5,7 +5,9 @@
     <string name="create_event">Create new game</string>
     <string name="browse_events">Upcoming games</string>
     <string name="submit_main_event_info">Done</string>
-    <string name="title_activity_event">EventActivity</string>
+
+    <string name="upcoming_games">Upcoming games</string>
+
     <string name="title_activity_event_creation">EventCreationActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
