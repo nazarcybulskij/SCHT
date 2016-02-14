@@ -104,6 +104,9 @@ dependencies {
   //realm
   compile 'io.realm:realm-android:0.87.4'
 
+  // date and time picker
+  compile 'com.wdullaer:materialdatetimepicker:2.1.1'
+
   // unit test dependencies
   testCompile 'junit:junit:4.12'
 }
