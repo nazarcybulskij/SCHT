@@ -24,9 +24,18 @@ public class TimeUtils {
     DateTime currentDate = new DateTime().withTimeAtStartOfDay();
     DateTime eventDate = new DateTime(time);
     Resources resources = context.getResources();
-    Period period = new Period(currentDate, eventDate);
+    Period period = new Period(eventDate, currentDate);
 
-    switch (period.getDays()) {
+    Logger.d("TAG",
+        period.getYears(),
+        period.getMonths(),
+        period.toStandardDays().getDays(),
+        period.getHours(),
+        period.getMinutes(),
+        period.getSeconds()
+    );
+
+    switch (period.toStandardDays().getDays()) {
       case 0:
         return resources.getString(R.string.date_today);
       case 1:

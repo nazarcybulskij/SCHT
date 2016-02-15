@@ -35,7 +35,6 @@ public class EventsAdapter extends BaseRecyclerAdapter<Event, EventViewHolder> {
   @Override
   public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_event, parent, false);
-    Logger.d("TAG", view);
     return new EventViewHolder(view);
   }
 

@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -42,14 +48,16 @@ import static ua.te.hackathon.smartcity2015.utils.Utils.text;
 public class EventCreationActivity extends BaseActivity
     implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+  private static final int PLACE_PICKER_REQUEST = 1;
+
   @Bind(R.id.etInputDate)
   Button etInputDate;
 
   @Bind(R.id.etInputTime)
   Button etInputTime;
 
-  @Bind(R.id.etPlace)
-  EditText etPlace;
+  @Bind(R.id.etEventPlace)
+  Button etPlace;
 
   @Bind(R.id.etName)
   EditText etName;
@@ -58,6 +66,7 @@ public class EventCreationActivity extends BaseActivity
   EditText etDescription;
 
   private org.joda.time.MutableDateTime dateTime;
+  private Place place;
 
   public static Intent startActivity(Context applicationContext) {
     Intent intent = new Intent(applicationContext, EventCreationActivity.class);
@@ -124,9 +133,38 @@ public class EventCreationActivity extends BaseActivity
     return super.onOptionsItemSelected(item);
   }
 
+  @OnClick(R.id.etEventPlace)
+  public void selectPlace() {
+    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+    try {
+      startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+    } catch (GooglePlayServicesRepairableException e) {
+      e.printStackTrace();
+    } catch (GooglePlayServicesNotAvailableException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == PLACE_PICKER_REQUEST) {
+      if (resultCode == RESULT_OK) {
+        place = PlacePicker.getPlace(this, data);
+        String address = place.getAddress().toString();
+        if (address.isEmpty()) {
+          LatLng loc = place.getLatLng();
+          address = String.format("%.2f %.2f", loc.latitude, loc.longitude);
+        }
+        etPlace.setText(address);
+      }
+    }
+  }
+
   @OnClick(R.id.btnDone)
   public void saveEvent(View view) {
-    if (!isEmpty(text(etPlace)) && !isEmpty(etInputTime.getText().toString())) {
+    if (place != null && !isEmpty(etInputTime.getText().toString())) {
       if (dateTime == null) {
         dateTime = new MutableDateTime();
       }
@@ -135,7 +173,7 @@ public class EventCreationActivity extends BaseActivity
       event.setName(text(etName));
       event.setDate(dateTime.getMillis());
       event.setDescription(text(etDescription));
-      event.setPlace(text(etPlace));
+      event.setPlace(place.getLatLng().toString());
 
       Realm realm = Realm.getInstance(getApplicationContext());
       realm.beginTransaction();

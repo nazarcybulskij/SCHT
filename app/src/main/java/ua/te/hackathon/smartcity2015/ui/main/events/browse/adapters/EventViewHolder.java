@@ -15,15 +15,12 @@ import ua.te.hackathon.smartcity2015.R;
  */
 public class EventViewHolder extends RecyclerView.ViewHolder {
 
-  @Nullable
   @Bind(R.id.textEventPlace)
   TextView textEventPlace;
 
-  @Nullable
   @Bind(R.id.textEventTime)
   TextView textEventTime;
 
-  @Nullable
   @Bind(R.id.textEventParticipantsCount)
   TextView textEventParticipantsCount;
 
