@@ -1,20 +1,14 @@
 package ua.te.hackathon.smartcity2015.api.stub
 
 import android.content.Context
-
 import com.google.gson.Gson
-
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.Arrays
-
 import rx.Observable
-import rx.Subscriber
-import ua.te.hackathon.smartcity2015.SmartCityApp
 import ua.te.hackathon.smartcity2015.api.SmartCityService
 import ua.te.hackathon.smartcity2015.api.model.Event
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.util.*
 
 /**
  * @author victor
@@ -23,7 +17,7 @@ import ua.te.hackathon.smartcity2015.api.model.Event
  */
 class SmartCityServiceStub(private val appContext: Context) : SmartCityService {
 
-  override fun getUpcomingEvents(): Observable<List<Event>> {
+  override fun upcomingEvents(): Observable<List<Event>> {
     return Observable.create { subscriber ->
       val gson = Gson()
       try {

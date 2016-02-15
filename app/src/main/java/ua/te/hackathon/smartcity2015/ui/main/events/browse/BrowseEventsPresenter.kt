@@ -5,7 +5,6 @@ import android.location.Location
 import com.google.android.gms.location.LocationRequest
 import io.realm.Realm
 import io.realm.Sort
-import org.joda.time.DateTime
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import ua.te.hackathon.smartcity2015.db.model.Event
 import ua.te.hackathon.smartcity2015.sync.SyncManager
@@ -75,7 +74,7 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
           findEventsNearBy(location);
         });
 
-    view?.deliverLoadingError(error.message)
+    view?.deliverLoadingError(error.message!!)
   }
 
   fun loadEvents() {

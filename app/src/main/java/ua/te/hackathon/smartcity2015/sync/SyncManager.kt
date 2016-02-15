@@ -18,9 +18,11 @@ object SyncManager {
 
   fun syncUpcomingEvents(appContext: Context) {
     Logger.d(LOG_TAG, "Upcoming events sync is triggered")
-    val service = SmartCityApp.getApp().apiService
+    val service = SmartCityApp.app!!.apiService
 
-    service.upcomingEvents.subscribeOn(Schedulers.io()).observeOn(Schedulers.io())
+    service!!.upcomingEvents()
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.io())
         .subscribe({ eventList ->
           Logger.d(LOG_TAG, "Upcoming events are loaded from server")
           EventsManager.updateEvents(appContext, eventList)

@@ -6,7 +6,6 @@ import android.test.ApplicationTestCase;
 import junit.framework.Assert;
 
 import io.realm.Realm;
-import ua.te.hackathon.smartcity2015.db.model.User;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
