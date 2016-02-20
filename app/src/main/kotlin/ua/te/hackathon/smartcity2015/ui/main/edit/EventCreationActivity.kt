@@ -32,7 +32,7 @@ import java.util.*
 
 class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-  private var dateTime: org.joda.time.MutableDateTime? = null
+  private var dateTime: MutableDateTime? = null
   private var place: Place? = null
 
   override fun onCreateAuthenticated(savedInstanceState: Bundle?) {

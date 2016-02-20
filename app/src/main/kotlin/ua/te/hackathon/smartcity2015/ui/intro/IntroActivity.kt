@@ -24,7 +24,7 @@ import java.util.*
 class IntroActivity : FragmentActivity(), IntroView {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-    presenter!!.handleOnActivityResult(requestCode, resultCode, data)
+    ua.te.hackathon.IntroActivity.Companion.presenter!!.handleOnActivityResult(requestCode, resultCode, data)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,15 +55,15 @@ class IntroActivity : FragmentActivity(), IntroView {
   override fun onPostCreate(savedInstanceState: Bundle?) {
     super.onPostCreate(savedInstanceState)
 
-    if (presenter == null) {
-      presenter = IntroPresenter(applicationContext)
+    if (ua.te.hackathon.IntroActivity.Companion.presenter == null) {
+      ua.te.hackathon.IntroActivity.Companion.presenter = IntroPresenter(applicationContext)
     }
 
-    presenter!!.attachView(this)
+    ua.te.hackathon.IntroActivity.Companion.presenter!!.attachView(this)
   }
 
   fun onLoginClick(v: View) {
-    presenter!!.login(this)
+    ua.te.hackathon.IntroActivity.Companion.presenter!!.login(this)
   }
 
   private fun startMainActivity() {
@@ -100,12 +100,12 @@ class IntroActivity : FragmentActivity(), IntroView {
   override fun onDestroy() {
     super.onDestroy()
 
-    if (presenter != null) {
-      presenter!!.detachView()
+    if (ua.te.hackathon.IntroActivity.Companion.presenter != null) {
+      ua.te.hackathon.IntroActivity.Companion.presenter!!.detachView()
 
       if (isFinishing) {
-        presenter!!.onDestroy()
-        presenter = null
+        ua.te.hackathon.IntroActivity.Companion.presenter!!.onDestroy()
+        ua.te.hackathon.IntroActivity.Companion.presenter = null
       }
     }
   }

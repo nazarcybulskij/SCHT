@@ -32,8 +32,8 @@ class BrowseEventsFragment : Fragment(), BrowseEventsView, SwipeRefreshLayout.On
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    if (presenter == null) {
-      presenter = BrowseEventsPresenter(activity.applicationContext)
+    if (ua.te.hackathon.BrowseEventsFragment.Companion.presenter == null) {
+      ua.te.hackathon.BrowseEventsFragment.Companion.presenter = BrowseEventsPresenter(activity.applicationContext)
     }
   }
 
@@ -69,30 +69,30 @@ class BrowseEventsFragment : Fragment(), BrowseEventsView, SwipeRefreshLayout.On
   }
 
   override fun showLoadingView() {
-    Logger.d(LOG_TAG, "showLoadingView")
+    Logger.d(ua.te.hackathon.BrowseEventsFragment.Companion.LOG_TAG, "showLoadingView")
     swipeToRefresh.post { swipeToRefresh.isRefreshing = true }
   }
 
   override fun hideLoadingView() {
-    Logger.d(LOG_TAG, "hideLoadingView")
+    Logger.d(ua.te.hackathon.BrowseEventsFragment.Companion.LOG_TAG, "hideLoadingView")
     swipeToRefresh.post { swipeToRefresh.isRefreshing = false }
   }
 
   override fun deliverEventList(list: List<Event>) {
-    Logger.d(LOG_TAG, "deliverEventList")
+    Logger.d(ua.te.hackathon.BrowseEventsFragment.Companion.LOG_TAG, "deliverEventList")
     adapter!!.setItemList(list)
     adapter!!.notifyDataSetChanged()
   }
 
   override fun deliverLoadingError(error: String) {
-    Logger.e(LOG_TAG, error)
+    Logger.e(ua.te.hackathon.BrowseEventsFragment.Companion.LOG_TAG, error)
     Toast.makeText(activity, error, Toast.LENGTH_LONG).show()
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN)
   fun onEventsSyncFinished(event: EventsSyncFinished) {
     if (event.isSuccess) {
-      presenter!!.loadEvents()
+      ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.loadEvents()
     } else {
       deliverLoadingError(event.error!!.message!!)
       hideLoadingView()
@@ -101,12 +101,12 @@ class BrowseEventsFragment : Fragment(), BrowseEventsView, SwipeRefreshLayout.On
 
   override fun onStart() {
     super.onStart()
-    presenter!!.attachView(this)
+    ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.attachView(this)
   }
 
   override fun onStop() {
     super.onStop()
-    presenter!!.detachView()
+    ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.detachView()
   }
 
   override fun onDestroyView() {
@@ -117,26 +117,26 @@ class BrowseEventsFragment : Fragment(), BrowseEventsView, SwipeRefreshLayout.On
   override fun onDestroy() {
     super.onDestroy()
 
-    if (presenter != null) {
-      presenter!!.detachView()
-      presenter!!.onDestroy()
+    if (ua.te.hackathon.BrowseEventsFragment.Companion.presenter != null) {
+      ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.detachView()
+      ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.onDestroy()
     }
   }
 
   override fun onRefresh() {
-    Logger.d(LOG_TAG, "Upcoming events refresh is triggered by user")
-    if (presenter != null) {
-      presenter!!.onRefresh()
+    Logger.d(ua.te.hackathon.BrowseEventsFragment.Companion.LOG_TAG, "Upcoming events refresh is triggered by user")
+    if (ua.te.hackathon.BrowseEventsFragment.Companion.presenter != null) {
+      ua.te.hackathon.BrowseEventsFragment.Companion.presenter!!.onRefresh()
     }
   }
 
   companion object {
-    val LOG_TAG = Logger.getLogTag(BrowseEventsFragment::class.java)
+    val LOG_TAG = Logger.getLogTag(ua.te.hackathon.BrowseEventsFragment::class.java)
 
     private var presenter: BrowseEventsPresenter? = null
 
-    fun newInstance(): BrowseEventsFragment {
-      val fragment = BrowseEventsFragment()
+    fun newInstance(): ua.te.hackathon.BrowseEventsFragment {
+      val fragment = ua.te.hackathon.BrowseEventsFragment()
       val args = Bundle()
       fragment.arguments = args
       return fragment

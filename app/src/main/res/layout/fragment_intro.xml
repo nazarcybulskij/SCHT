@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="ua.te.hackathon.smartcity2015.ui.intro.IntroFragment">
+    tools:context=".ui.intro.IntroFragment">
 
   <ImageView
       android:id="@+id/imageIntro"

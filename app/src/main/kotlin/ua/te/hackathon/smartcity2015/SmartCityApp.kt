@@ -20,7 +20,7 @@ class SmartCityApp : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    app = this
+    ua.te.hackathon.SmartCityApp.Companion.app = this
 
     Logger.logLevel = Logger.LogLevel.ALL
     JodaTimeAndroid.init(this)
@@ -47,7 +47,7 @@ class SmartCityApp : Application() {
   }
 
   companion object {
-    var app: SmartCityApp? = null
+    var app: ua.te.hackathon.SmartCityApp? = null
       private set
   }
 }

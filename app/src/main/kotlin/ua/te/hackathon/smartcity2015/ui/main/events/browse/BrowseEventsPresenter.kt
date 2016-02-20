@@ -19,7 +19,7 @@ import ua.te.hackathon.smartcity2015.utils.Logger
 class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseEventsView> {
 
   companion object Factory {
-    val LOG_TAG = Logger.getLogTag(BrowseEventsPresenter::class.java)
+    val LOG_TAG = Logger.getLogTag(ua.te.hackathon.BrowseEventsPresenter::class.java)
   }
 
   private var view: BrowseEventsView? = null
@@ -56,12 +56,12 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   }
 
   fun onRefresh() {
-    Logger.d(LOG_TAG, "Starting upcoming events loading")
+    Logger.d(ua.te.hackathon.BrowseEventsPresenter.Factory.LOG_TAG, "Starting upcoming events loading")
     SyncManager.syncUpcomingEvents(appContext)
   }
 
   private fun onLocationLoadFailed(error: Throwable) {
-    Logger.e(LOG_TAG, error)
+    Logger.e(ua.te.hackathon.BrowseEventsPresenter.Factory.LOG_TAG, error)
 
     val request = LocationRequest.create() //standard GMS LocationRequest
         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)

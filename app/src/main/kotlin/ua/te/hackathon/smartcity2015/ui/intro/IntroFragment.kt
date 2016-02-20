@@ -16,7 +16,7 @@ class IntroFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    pos = arguments.getInt(EXTRA_POSITION)
+    pos = arguments.getInt(ua.te.hackathon.IntroFragment.Companion.EXTRA_POSITION)
   }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -42,10 +42,10 @@ class IntroFragment : Fragment() {
 
     private val EXTRA_POSITION = "extra:pos"
 
-    fun newInstance(pos: Int): IntroFragment {
-      val fragment = IntroFragment()
+    fun newInstance(pos: Int): ua.te.hackathon.IntroFragment {
+      val fragment = ua.te.hackathon.IntroFragment()
       val args = Bundle()
-      args.putInt(EXTRA_POSITION, pos)
+      args.putInt(ua.te.hackathon.IntroFragment.Companion.EXTRA_POSITION, pos)
       fragment.arguments = args
       return fragment
     }

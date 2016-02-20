@@ -59,22 +59,22 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
     initGoogleApiIfNeeded(activity)
 
     val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-    activity.startActivityForResult(signInIntent, GoogleApiHelper.GOOGLE_SIGN_IN_CODE)
+    activity.startActivityForResult(signInIntent, ua.te.hackathon.GoogleApiHelper.Companion.GOOGLE_SIGN_IN_CODE)
   }
 
   /**
    * This code should be called on activity, which calls [.startGoogleRegistration]
    */
   fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-    if (requestCode == GoogleApiHelper.GOOGLE_SIGN_IN_CODE) {
-      val result = com.google.android.gms.auth.api.Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+    if (requestCode == ua.te.hackathon.GoogleApiHelper.Companion.GOOGLE_SIGN_IN_CODE) {
+      val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
       handleGoogleSignInResult(result)
     }
   }
 
   private fun handleGoogleSignInResult(result: GoogleSignInResult?) {
     if (result == null) {
-      val googleAuthResult = GoogleAuthResult(
+      val googleAuthResult = ua.te.hackathon.GoogleApiHelper.GoogleAuthResult(
           0,
           context.getString(R.string.error_registration_google))
       EventBus.getDefault().postSticky(googleAuthResult)
@@ -82,10 +82,10 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
     }
 
     if (result.isSuccess) {
-      val googleAuthResult = GoogleAuthResult(result.signInAccount!!)
+      val googleAuthResult = ua.te.hackathon.GoogleApiHelper.GoogleAuthResult(result.signInAccount!!)
       EventBus.getDefault().postSticky(googleAuthResult)
     } else {
-      val googleAuthResult = GoogleAuthResult(
+      val googleAuthResult = ua.te.hackathon.GoogleApiHelper.GoogleAuthResult(
           result.status.statusCode,
           result.status.statusMessage)
       EventBus.getDefault().postSticky(googleAuthResult)
@@ -93,8 +93,8 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
   }
 
   override fun onConnectionFailed(connectionResult: ConnectionResult) {
-    Logger.w(LOG_TAG, "Cannot connect to Google account", connectionResult)
-    val googleAuthResult = GoogleAuthResult(0, context.getString(R.string.error_registration_google))
+    Logger.w(ua.te.hackathon.GoogleApiHelper.Companion.LOG_TAG, "Cannot connect to Google account", connectionResult)
+    val googleAuthResult = ua.te.hackathon.GoogleApiHelper.GoogleAuthResult(0, context.getString(R.string.error_registration_google))
     EventBus.getDefault().postSticky(googleAuthResult)
   }
 
@@ -135,7 +135,7 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
     init {
       this.nickname = account.displayName ?: ""
       this.email = account.email
-      this.imageUrl = if (account.photoUrl != null) account.photoUrl!!.toString() + IMAGE_SIZE else null
+      this.imageUrl = if (account.photoUrl != null) account.photoUrl!!.toString() + ua.te.hackathon.GoogleApiHelper.Companion.IMAGE_SIZE else null
       val result = this.nickname.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
       this.nickname = this.nickname.replace(" ", "")
       if (result.size >= 2) {
@@ -146,7 +146,7 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
   }
 
   companion object {
-    private val LOG_TAG = Logger.getLogTag(GoogleApiHelper::class.java)
+    private val LOG_TAG = Logger.getLogTag(ua.te.hackathon.GoogleApiHelper::class.java)
 
     private val IMAGE_SIZE = "?sz=500"
     val GOOGLE_SIGN_IN_CODE = 85
@@ -162,7 +162,7 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
         }
 
         override fun onConnectionSuspended(i: Int) {
-          Logger.w(LOG_TAG, "Google Api Connection suspended")
+          Logger.w(ua.te.hackathon.GoogleApiHelper.Companion.LOG_TAG, "Google Api Connection suspended")
         }
       })
 

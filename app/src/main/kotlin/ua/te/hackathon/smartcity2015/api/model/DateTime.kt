@@ -39,19 +39,19 @@ class DateTime {
 
   fun get(): String {
     val dateTime = org.joda.time.DateTime(years, months, days, hours, minutes, seconds)
-    return DATETIME_FORMATTER.print(dateTime)
+    return ua.te.hackathon.DateTime.Companion.DATETIME_FORMATTER.print(dateTime)
   }
 
   val time: String
     get() {
       val dateTime = org.joda.time.DateTime(years, months, days, hours, minutes, seconds)
-      return TIME_FORMATTER.print(dateTime)
+      return ua.te.hackathon.DateTime.Companion.TIME_FORMATTER.print(dateTime)
     }
 
   val date: String
     get() {
       val dateTime = org.joda.time.DateTime(years, months, days, hours, minutes, seconds)
-      return DATE_FORMATTER.print(dateTime)
+      return ua.te.hackathon.DateTime.Companion.DATE_FORMATTER.print(dateTime)
     }
 
   val millis: Long
@@ -62,10 +62,10 @@ class DateTime {
 
   companion object {
     private val FORMAT = "HH:mm DD-MM-YY"
-    val DATETIME_FORMATTER = DateTimeFormat.forPattern(FORMAT)
+    val DATETIME_FORMATTER = DateTimeFormat.forPattern(ua.te.hackathon.DateTime.Companion.FORMAT)
     private val DATE_FORMAT = "DD-MM-YY"
-    val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT)
+    val DATE_FORMATTER = DateTimeFormat.forPattern(ua.te.hackathon.DateTime.Companion.DATE_FORMAT)
     private val TIME_FORMAT = "HH:mm"
-    val TIME_FORMATTER = DateTimeFormat.forPattern(TIME_FORMAT)
+    val TIME_FORMATTER = DateTimeFormat.forPattern(ua.te.hackathon.DateTime.Companion.TIME_FORMAT)
   }
 }
