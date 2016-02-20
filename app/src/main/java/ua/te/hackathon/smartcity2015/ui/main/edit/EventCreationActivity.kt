@@ -40,7 +40,8 @@ class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     val toolbar = findViewById(R.id.toolbar) as Toolbar
     setSupportActionBar(toolbar)
     supportActionBar!!.setTitle(R.string.create_event)
-    supportActionBar!!.setDefaultDisplayHomeAsUpEnabled(true)
+    supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp)
 
     etInputTime.text = currentTime
 
@@ -50,35 +51,65 @@ class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     btnDone.setOnClickListener({ v -> saveEvent(v) })
   }
 
+  override fun onStart() {
+    super.onStart()
+    defineDefaultEventTime()
+
+    updateDateField()
+    updateTimeField()
+    updatePlace()
+  }
+
+  private fun defineDefaultEventTime() {
+    if (dateTime == null || dateTime!!.isBefore(MutableDateTime.now())) {
+      val time = MutableDateTime.now()
+      time.addHours(2)
+      time.minuteOfHour = 0
+      time.secondOfMinute = 0
+
+      if (time.hourOfDay > 21) {
+        time.addDays(1)
+        time.hourOfDay = 8
+      } else if (time.hourOfDay < 8) {
+        time.hourOfDay = 8
+      }
+
+      dateTime = time
+    }
+  }
+
   private val currentTime: String
     get() = DateTime.TIME_FORMATTER.print(org.joda.time.DateTime())
 
   fun chooseDateTime(button: View) {
-    val now = Calendar.getInstance()
     when (button.id) {
       R.id.etInputDate -> {
         val dpd = DatePickerDialog.newInstance(
             this,
-            now.get(Calendar.YEAR),
-            now.get(Calendar.MONTH),
-            now.get(Calendar.DAY_OF_MONTH))
+            dateTime!!.year,
+            // DatePickerDialog month index is 0-based
+            // joda DateTime month index in 1-based
+            dateTime!!.monthOfYear - 1,
+            dateTime!!.dayOfMonth)
 
         val minDate = Calendar.getInstance()
         minDate.add(Calendar.HOUR, 1)
         val maxDate = Calendar.getInstance()
         maxDate.timeInMillis = minDate.timeInMillis
         maxDate.add(Calendar.DATE, 7)
+        maxDate.set(Calendar.HOUR_OF_DAY, 23)
+        maxDate.set(Calendar.MINUTE, 59)
         dpd.minDate = minDate
         dpd.maxDate = maxDate
-        dpd.show(fragmentManager, "Datepickerdialog")
+        dpd.show(fragmentManager, "datePickerDialog")
       }
       R.id.etInputTime -> {
         val tpd = TimePickerDialog.newInstance(
             this,
-            now.get(Calendar.HOUR),
-            now.get(Calendar.MINUTE),
+            dateTime!!.hourOfDay,
+            dateTime!!.minuteOfHour,
             true)
-        tpd.show(fragmentManager, "Timepickerdialog")
+        tpd.show(fragmentManager, "timePickerDialog")
       }
     }
   }
@@ -107,14 +138,23 @@ class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     if (requestCode == PLACE_PICKER_REQUEST) {
       if (resultCode == Activity.RESULT_OK) {
         place = PlacePicker.getPlace(this, data)
-        var address = place!!.address.toString()
-        if (address.isEmpty()) {
-          val loc = place!!.latLng
-          address = String.format("%.2f %.2f", loc.latitude, loc.longitude)
-        }
-        etEventPlace.text = address
+        updatePlace()
       }
     }
+  }
+
+  private fun updatePlace() {
+    if (place == null) {
+      etEventPlace.text = getString(R.string.events_create_choose_place);
+      return;
+    }
+
+    var address = place!!.address.toString()
+    if (address.isEmpty()) {
+      val loc = place!!.latLng
+      address = String.format("%.2f %.2f", loc.latitude, loc.longitude)
+    }
+    etEventPlace.text = address
   }
 
   fun saveEvent(view: View) {
@@ -124,7 +164,7 @@ class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
       }
       val event = Event()
       event.id = DBUtil.getNextId(Event::class.java)
-      event.name = text(etName)
+      event.name = spinnerGame.selectedItem as String?
       event.date = dateTime!!.millis
       event.description = text(etDescription)
       event.place = place!!.latLng.toString()
@@ -143,28 +183,32 @@ class EventCreationActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
   }
 
   override fun onDateSet(view: DatePickerDialog, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-    if (dateTime == null) {
-      dateTime = org.joda.time.MutableDateTime()
-    }
     dateTime!!.dayOfMonth = dayOfMonth
-    dateTime!!.monthOfYear = monthOfYear
+    // DatePickerDialog month index is 0-based
+    // joda DateTime month index in 1-based
+    dateTime!!.monthOfYear = monthOfYear + 1
     dateTime!!.year = year
+
+    updateDateField()
+  }
+
+  private fun updateDateField() {
     etInputDate.text = TimeUtils.getDayPresentation(this, dateTime!!.millis)
   }
 
+  private fun updateTimeField() {
+    etInputTime.text = String.format(getString(R.string.events_event_time_at),
+        DateTime.TIME_FORMATTER.print(dateTime))
+  }
+
   override fun onTimeSet(view: RadialPickerLayout, hourOfDay: Int, minute: Int, second: Int) {
-    if (dateTime == null) {
-      dateTime = org.joda.time.MutableDateTime()
-      dateTime!!.millis = System.currentTimeMillis()
-    }
     dateTime!!.hourOfDay = hourOfDay
     dateTime!!.minuteOfHour = minute
-    dateTime!!.secondOfMinute = second
-    etInputTime.text = String.format("at %s", DateTime.TIME_FORMATTER.print(dateTime))
+
+    updateTimeField()
   }
 
   companion object {
-
     private val PLACE_PICKER_REQUEST = 1
 
     fun startActivity(applicationContext: Context): Intent {

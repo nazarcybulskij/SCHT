@@ -2,9 +2,11 @@ package ua.te.hackathon.smartcity2015.utils
 
 import android.content.Context
 import org.joda.time.DateTime
+import org.joda.time.Days
 import org.joda.time.Period
 import org.joda.time.format.DateTimeFormat
 import ua.te.hackathon.smartcity2015.R
+import java.util.concurrent.TimeUnit
 
 /**
  * @author victor
@@ -17,17 +19,10 @@ object TimeUtils {
     val currentDate = DateTime.now().withTimeAtStartOfDay()
     val eventDate = DateTime(time)
     val resources = context.resources
-    val period = Period(eventDate, currentDate)
 
-    Logger.d("TAG",
-        period.years,
-        period.months,
-        period.days,
-        period.hours,
-        period.minutes,
-        period.seconds)
+    val days = Days.daysBetween(currentDate, eventDate).days
 
-    when (period.toStandardDays().days) {
+    when (days) {
       0 -> return resources.getString(R.string.date_today)
       1 -> return resources.getString(R.string.date_tomorrow)
       else -> {

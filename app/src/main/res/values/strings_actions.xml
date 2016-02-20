@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="action_ok">Ok</string>
+  <string name="action_cancel">Cancel</string>
+  <string name="action_yes">Yes</string>
+  <string name="action_no">No</string>
+  <string name="action_done">Done</string>
+
+  <string name="action_logout">Log out</string>
+
+</resources>

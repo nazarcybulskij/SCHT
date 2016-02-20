@@ -76,7 +76,7 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
     if (result == null) {
       val googleAuthResult = GoogleAuthResult(
           0,
-          context.getString(R.string.error_google_registration))
+          context.getString(R.string.error_registration_google))
       EventBus.getDefault().postSticky(googleAuthResult)
       return
     }
@@ -94,7 +94,7 @@ class GoogleApiHelper(context: Context) : GoogleApiClient.OnConnectionFailedList
 
   override fun onConnectionFailed(connectionResult: ConnectionResult) {
     Logger.w(LOG_TAG, "Cannot connect to Google account", connectionResult)
-    val googleAuthResult = GoogleAuthResult(0, context.getString(R.string.error_google_registration))
+    val googleAuthResult = GoogleAuthResult(0, context.getString(R.string.error_registration_google))
     EventBus.getDefault().postSticky(googleAuthResult)
   }
 

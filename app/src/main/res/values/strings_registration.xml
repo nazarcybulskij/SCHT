@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="registration_intro_slogan1">Find a game</string>
+  <string name="registration_intro_slogan2">Create your game</string>
+  <string name="registration_intro_slogan3">Play and have fun!</string>
+
+
+  <string name="registration_signin_google">Sign In With Google Plus</string>
+  <string name="error_registration_google">Cannot register using Google+</string>
+
+</resources>

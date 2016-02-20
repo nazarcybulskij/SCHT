@@ -2,15 +2,21 @@
 <resources>
 
   <array name="intro_icons">
-    <item>@drawable/ic_explore_black_48px</item>
-    <item>@drawable/ic_create_black_48px</item>
-    <item>@drawable/ic_have_fun_black_48px</item>
+    <item>@drawable/ic_explore_white_48px</item>
+    <item>@drawable/ic_create_white_48px</item>
+    <item>@drawable/ic_have_fun_white_48px</item>
   </array>
 
   <string-array name="intro_slogans">
-    <item>@string/intro_slogan1</item>
-    <item>@string/intro_slogan2</item>
-    <item>@string/intro_slogan3</item>
+    <item>@string/registration_intro_slogan1</item>
+    <item>@string/registration_intro_slogan2</item>
+    <item>@string/registration_intro_slogan3</item>
+  </string-array>
+
+  <string-array name="games">
+    <item>@string/games_football</item>
+    <item>@string/games_basketball</item>
+    <item>@string/games_volleyball</item>
   </string-array>
 
 </resources>
