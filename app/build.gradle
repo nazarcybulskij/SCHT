@@ -120,10 +120,60 @@ dependencies {
   // dependency injection
   kapt 'com.google.dagger:dagger-compiler:2.0'
   compile 'com.google.dagger:dagger:2.0'
+  provided "javax.annotation:jsr250-api:1.0"
 
   // date and time picker
   compile 'com.wdullaer:materialdatetimepicker:2.1.1'
 
   // unit test dependencies
   testCompile 'junit:junit:4.12'
+}
+
+//==================================================
+// Test coverage
+//==================================================
+
+apply plugin: 'jacoco'
+
+jacoco {
+  toolVersion = "0.7.1.201405082137"
+}
+
+def coverageSourceDirs = [
+    '../app/src/main/java'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+  group = "Reporting"
+
+  description = "Generate Jacoco coverage reports"
+
+  classDirectories = fileTree(
+      dir: '../app/build/intermediates/classes/debug',
+      excludes: ['**/R.class',
+                 '**/R$*.class',
+                 '**/*$ViewInjector*.*',
+                 '**/*$ViewBinder*.*',   //DI
+                 '**/*_MembersInjector*.*',  //DI
+                 '**/*_Factory*.*',  //DI
+                 '**/stepbystep/model/dto/*.*', //dto model
+                 '**/stepbystep/presenter/vo/*.*', //vo model
+                 '**/stepbystep/other/**',
+                 '**/BuildConfig.*',
+                 '**/Manifest*.*',
+                 '**/Lambda$*.class',
+                 '**/Lambda.class',
+                 '**/*Lambda.class',
+                 '**/*Lambda*.class']
+  )
+
+  additionalSourceDirs = files(coverageSourceDirs)
+  sourceDirectories = files(coverageSourceDirs)
+  executionData = files('../app/build/jacoco/testDebugUnitTest.exec')
+
+  reports {
+    xml.enabled = true
+    html.enabled = true
+  }
+
 }

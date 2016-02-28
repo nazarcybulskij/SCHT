@@ -3,28 +3,43 @@ package ua.te.hackathon.smartcity2015.ui.main.events.browse
 import android.content.Context
 import android.location.Location
 import com.google.android.gms.location.LocationRequest
+import common.Logger
 import io.realm.Realm
 import io.realm.Sort
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
+import ua.te.hackathon.smartcity2015.Injector
+import ua.te.hackathon.smartcity2015.dagger.components.DaggerPresenterComponent
 import ua.te.hackathon.smartcity2015.db.model.Event
 import ua.te.hackathon.smartcity2015.sync.SyncManager
 import ua.te.hackathon.smartcity2015.ui.base.mvp.Presenter
-import ua.te.hackathon.smartcity2015.utils.Logger
+import javax.inject.Inject
 
 /**
  * @author victor
  * *
  * @since 2016-02-13
  */
-class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseEventsView> {
+class BrowseEventsPresenter() : Presenter<BrowseEventsView> {
 
   companion object Factory {
-    val LOG_TAG = Logger.getLogTag(ua.te.hackathon.BrowseEventsPresenter::class.java)
+    val LOG_TAG = Logger.getLogTag(BrowseEventsPresenter::class.java)
   }
 
   private var view: BrowseEventsView? = null
 
   private var eventList: List<Event>? = null
+
+  @Inject
+  lateinit var appContext: Context
+
+  @Inject
+  lateinit var syncManager: SyncManager
+
+  init {
+    DaggerPresenterComponent.builder()
+    .applicationComponent(Injector.applicationComponent)
+    .build().inject(this)
+  }
 
   private fun loadLastKnownLocation() {
     // right now this method returns nothing as probably there is no
@@ -56,12 +71,12 @@ class BrowseEventsPresenter(private val appContext: Context) : Presenter<BrowseE
   }
 
   fun onRefresh() {
-    Logger.d(ua.te.hackathon.BrowseEventsPresenter.Factory.LOG_TAG, "Starting upcoming events loading")
-    SyncManager.syncUpcomingEvents(appContext)
+    Logger.d(BrowseEventsPresenter.Factory.LOG_TAG, "Starting upcoming events loading")
+    syncManager.syncUpcomingEvents()
   }
 
   private fun onLocationLoadFailed(error: Throwable) {
-    Logger.e(ua.te.hackathon.BrowseEventsPresenter.Factory.LOG_TAG, error)
+    Logger.e(BrowseEventsPresenter.Factory.LOG_TAG, error)
 
     val request = LocationRequest.create() //standard GMS LocationRequest
         .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)

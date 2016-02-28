@@ -1,5 +1,6 @@
 package ua.te.hackathon.smartcity2015.utils
 
+import ua.te.hackathon.smartcity2015.Injector
 import ua.te.hackathon.smartcity2015.SmartCityApp
 import ua.te.hackathon.smartcity2015.google.GoogleApiHelper
 
@@ -17,25 +18,25 @@ object LoggedUser {
 
   fun logOut() {
     GoogleApiHelper.logOut()
-    PrefsUtil.clear(SmartCityApp.app!!)
+    PrefsUtil.clear(Injector.context!!)
   }
 
   val isLoggedIn: Boolean
-    get() = ua.te.hackathon.LoggedUser.email != null
+    get() = email != null
 
   var firstName: String?
-    get() = PrefsUtil.getString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.FIRST_NAME)
-    set(firstName) = PrefsUtil.putString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.FIRST_NAME, firstName)
+    get() = PrefsUtil.getString(Injector.context!!, FIRST_NAME)
+    set(firstName) = PrefsUtil.putString(Injector.context!!, FIRST_NAME, firstName)
 
   var lastName: String?
-    get() = PrefsUtil.getString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.LAST_NAME)
-    set(lastName) = PrefsUtil.putString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.LAST_NAME, lastName)
+    get() = PrefsUtil.getString(Injector.context!!, LAST_NAME)
+    set(lastName) = PrefsUtil.putString(Injector.context!!, LAST_NAME, lastName)
 
   var photoUrl: String?
-    get() = PrefsUtil.getString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.PHOTO_URL)
-    set(photoUrl) = PrefsUtil.putString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.PHOTO_URL, photoUrl)
+    get() = PrefsUtil.getString(Injector.context!!, PHOTO_URL)
+    set(photoUrl) = PrefsUtil.putString(Injector.context!!, PHOTO_URL, photoUrl)
 
   var email: String?
-    get() = PrefsUtil.getString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.EMAIL)
-    set(email) = PrefsUtil.putString(SmartCityApp.app!!, ua.te.hackathon.LoggedUser.EMAIL, email)
+    get() = PrefsUtil.getString(Injector.context!!, EMAIL)
+    set(email) = PrefsUtil.putString(Injector.context!!, EMAIL, email)
 }

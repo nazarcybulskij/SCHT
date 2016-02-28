@@ -3,10 +3,12 @@ package ua.te.hackathon.smartcity2015
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
+import common.Logger
 import net.danlew.android.joda.JodaTimeAndroid
-import ua.te.hackathon.smartcity2015.api.SmartCityService
-import ua.te.hackathon.smartcity2015.api.stub.SmartCityServiceStub
-import ua.te.hackathon.smartcity2015.utils.Logger
+import ua.te.hackathon.smartcity2015.dagger.components.DaggerApplicationComponent
+import ua.te.hackathon.smartcity2015.dagger.modules.ApiModule
+import ua.te.hackathon.smartcity2015.dagger.modules.ApplicationModule
+import ua.te.hackathon.smartcity2015.dagger.modules.NetworkModule
 
 /**
  * @author victor
@@ -15,39 +17,25 @@ import ua.te.hackathon.smartcity2015.utils.Logger
  */
 class SmartCityApp : Application() {
 
-  var apiService: SmartCityService? = null
-    private set
-
   override fun onCreate() {
     super.onCreate()
-    ua.te.hackathon.SmartCityApp.Companion.app = this
 
-    Logger.logLevel = Logger.LogLevel.ALL
+    Logger.setLogLevel(Logger.LogLevel.ALL)
     JodaTimeAndroid.init(this)
-    initializeApi()
+    initializeDI()
   }
 
-  private fun initializeApi() {
-    //    Retrofit retrofit = new Retrofit.Builder()
-    //        .baseUrl("https://www.smartcity.hackathon.te.ua/api/v1/")
-    //        .client(new OkHttpClient())
-    //        .addConverterFactory(GsonConverterFactory.create())
-    //        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-    //        .build();
-    //
-    //    apiService = retrofit.create(SmartCityService.class);
-
-    //STUB
-    apiService = SmartCityServiceStub(this)
+  private fun initializeDI() {
+    Injector.context = this
+    Injector.applicationComponent = DaggerApplicationComponent.builder()
+        .applicationModule(ApplicationModule(this))
+        .networkModule(NetworkModule())
+        .apiModule(ApiModule())
+        .build();
   }
 
   override fun attachBaseContext(base: Context) {
     super.attachBaseContext(base)
     MultiDex.install(this)
-  }
-
-  companion object {
-    var app: ua.te.hackathon.SmartCityApp? = null
-      private set
   }
 }

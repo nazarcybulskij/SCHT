@@ -2,7 +2,7 @@ package ua.te.hackathon.smartcity2015.db
 
 import io.realm.Realm
 import io.realm.RealmObject
-import ua.te.hackathon.smartcity2015.SmartCityApp
+import ua.te.hackathon.smartcity2015.Injector
 
 /**
  * @author victor
@@ -12,7 +12,7 @@ import ua.te.hackathon.smartcity2015.SmartCityApp
 object DBUtil {
 
   fun getNextId(clazz: Class<out RealmObject>): Int {
-    val realm = Realm.getInstance(SmartCityApp.app)
+    val realm = Realm.getInstance(Injector.context!!)
     val number = realm.where(clazz).max("id")
     if (number == null) {
       return 1

@@ -33,11 +33,11 @@ class MainActivity : BaseActivity(), MainView {
   override fun onPostCreate(savedInstanceState: Bundle?) {
     super.onPostCreate(savedInstanceState)
 
-    if (ua.te.hackathon.MainActivity.Companion.presenter == null) {
-      ua.te.hackathon.MainActivity.Companion.presenter = MainPresenter(applicationContext)
+    if (MainActivity.Companion.presenter == null) {
+      MainActivity.Companion.presenter = MainPresenter(applicationContext)
     }
 
-    ua.te.hackathon.MainActivity.Companion.presenter!!.attachView(this)
+    MainActivity.Companion.presenter!!.attachView(this)
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -63,12 +63,12 @@ class MainActivity : BaseActivity(), MainView {
 
     EventBus.getDefault().unregister(this)
 
-    if (ua.te.hackathon.MainActivity.Companion.presenter != null) {
-      ua.te.hackathon.MainActivity.Companion.presenter!!.detachView()
+    if (MainActivity.Companion.presenter != null) {
+      MainActivity.Companion.presenter!!.detachView()
 
       if (isFinishing) {
-        ua.te.hackathon.MainActivity.Companion.presenter!!.onDestroy()
-        ua.te.hackathon.MainActivity.Companion.presenter = null
+        MainActivity.Companion.presenter!!.onDestroy()
+        MainActivity.Companion.presenter = null
       }
     }
   }
